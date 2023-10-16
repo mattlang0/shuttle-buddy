@@ -65,7 +65,7 @@ export default function Main() {
           setShuttleVisible(!shuttleVisible);
         }}>
         <View style={styles.modalView}>
-          <Shuttle onClose={() => setShuttleVisible(!shuttleVisible)}/>
+          <Shuttle onClose={() => setShuttleVisible(!shuttleVisible)} people={people} vehicles={vehicles} shuttleType={shuttleType}/>
         </View>
       </Modal>
       

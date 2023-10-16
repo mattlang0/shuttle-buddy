@@ -2,12 +2,16 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, Pressable, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
+import { PersonType, VehicleType, ShuttleType } from '../logic/Types';
 
-const ShuttleProps = {
-  onClose:()=>{}
+type ShuttleProps = {
+  people: PersonType[],
+  vehicles: VehicleType[],
+  shuttleType: ShuttleType,
+  onClose:()=>void
 };
 
-export default function Shuttle(props: typeof ShuttleProps) {
+export default function Shuttle(props: ShuttleProps) {
   const { onClose } = props;
 
   return (
