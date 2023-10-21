@@ -9,7 +9,7 @@ type PassengerProps = {
     person: PersonType;
 };
 
-export const Person = (props: PassengerProps) => {
+export const Passenger = (props: PassengerProps) => {
     const { person } = props;
     let personIcon = "😀";
   

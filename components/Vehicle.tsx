@@ -4,7 +4,7 @@ import {
     Text,
     StyleSheet,
 } from 'react-native';
-import { Person } from "./Passenger";
+import { Passenger } from "./Passenger";
 
 type VehicleProps = {
     vehicle: VehicleType;
@@ -27,7 +27,7 @@ export const Vehicle = ({vehicle, people}: VehicleProps) => {
         <View  style={styles.peopleContainer}>
           {peopleInVehicle.length > 0 &&
             peopleInVehicle.map((person: PersonType) => {
-              return <Person key={person.id} person={person} />;
+              return <Passenger key={person.id} person={person} />;
             })}
         </View>
       </View>
