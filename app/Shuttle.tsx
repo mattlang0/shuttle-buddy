@@ -38,15 +38,21 @@ export default function Shuttle(props: ShuttleProps) {
     });
   };
 
+  const onShare = () => {};
+
   return (
     <View style={styles.container}>
 
       <View style={styles.topBar}>
         <Pressable
           onPress={onClose}>
-          <FontAwesome style={styles.closeIcon} name='close' />
+          <FontAwesome style={styles.topBarIcon} name='close' />
         </Pressable>
         <Text style={styles.title}>Step {activeStep + 1}</Text>
+        <Pressable
+          onPress={onShare}>
+          <FontAwesome style={styles.topBarIcon} name='share' />
+        </Pressable>
       </View>
       
       <View style={styles.stepContainer}>
@@ -77,11 +83,12 @@ const styles = StyleSheet.create({
   },
   topBar: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  closeIcon: {
-    fontSize: 30,
+  topBarIcon: {
+    fontSize: 24,
+    margin: 10,
   },
   title: {
     textAlign: 'center',
