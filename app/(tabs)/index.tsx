@@ -64,7 +64,7 @@ export default function Main() {
         onRequestClose={() => {
           setShuttleVisible(!shuttleVisible);
         }}>
-        <View style={styles.modalView}>
+        <View style={styles.shuttleView}>
           <Shuttle onClose={() => setShuttleVisible(!shuttleVisible)} people={people} vehicles={vehicles} shuttleType={shuttleType}/>
         </View>
       </Modal>
@@ -109,6 +109,21 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 180,
     marginBottom: 180,
+    margin: 20,
+    borderRadius: 20,
+    padding: 5,
+    alignItems: 'stretch',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  shuttleView: {
+    flex: 1,
     margin: 20,
     borderRadius: 20,
     padding: 5,
