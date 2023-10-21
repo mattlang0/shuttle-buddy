@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Platform, Pressable, StyleSheet } from 'react-native';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+
+import { Pressable, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { PersonType, VehicleType, ShuttleType, StepType } from '../logic/Types';
 import { calculateMeetAtPutIn } from '../logic/logic';
@@ -39,14 +40,18 @@ export default function Shuttle(props: ShuttleProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Step {activeStep + 1}</Text>
+
+      <View style={styles.topBar}>
+        <Pressable
+          onPress={onClose}>
+          <FontAwesome style={styles.closeIcon} name='close' />
+        </Pressable>
+        <Text style={styles.title}>Step {activeStep + 1}</Text>
+      </View>
       
       <View style={styles.stepContainer}>
         <Step step={steps[activeStep]}/>
       </View>
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
 
       <View style={styles.stepController}>
         <Pressable
@@ -60,12 +65,6 @@ export default function Shuttle(props: ShuttleProps) {
           <Text style={styles.buttonText}>{'>'}</Text>
         </Pressable>
       </View>
-
-      <Pressable
-        style={[styles.button]}
-        onPress={onClose}>
-        <Text style={styles.buttonText}>Close</Text>
-      </Pressable>
     </View>
   );
 }
@@ -75,6 +74,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
+  },
+  topBar: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  closeIcon: {
+    fontSize: 30,
   },
   title: {
     textAlign: 'center',
