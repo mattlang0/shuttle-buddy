@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Pressable, Modal } from 'react-native';
+import { StyleSheet, Pressable, Modal, KeyboardAvoidingView, Platform } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import AddEditEntity from '../AddEditEntity';
 import Shuttle from '../Shuttle';
@@ -51,9 +51,11 @@ export default function Main() {
         onRequestClose={() => {
           setAddPersonVisible(!addPersonVisible);
         }}>
-        <View style={styles.modalView}>
+        <KeyboardAvoidingView 
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.modalView}>
           <AddEditEntity onClose={() => setAddPersonVisible(!addPersonVisible)} setPeople={setPeople} setVehicles={setVehicles} people={people}/>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
 
       {/* Shuttle Modal */}
@@ -107,12 +109,9 @@ const styles = StyleSheet.create({
   },
   modalView: {
     flex: 1,
-    marginTop: 180,
-    marginBottom: 180,
     margin: 20,
     borderRadius: 20,
     padding: 5,
-    alignItems: 'stretch',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -121,6 +120,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    maxHeight: 300,
   },
   shuttleView: {
     flex: 1,
