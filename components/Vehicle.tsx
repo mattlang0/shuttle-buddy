@@ -4,7 +4,7 @@ import {
     Text,
     StyleSheet,
 } from 'react-native';
-import { Person } from "./Person";
+import { Person } from "./Passenger";
 
 type VehicleProps = {
     vehicle: VehicleType;

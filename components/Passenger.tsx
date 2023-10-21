@@ -5,17 +5,13 @@ import {
     StyleSheet,
     } from 'react-native';
 
-type PersonProps = {
-    person?: PersonType;
+type PassengerProps = {
+    person: PersonType;
 };
 
-export const Person = (props: PersonProps) => {
+export const Person = (props: PassengerProps) => {
     const { person } = props;
-    let personIcon = "🫥";
-    if (person) {
-      const isPassenger = person?.vehicleId !== undefined;
-      personIcon = isPassenger ? "😀" : "🧍";
-    }
+    let personIcon = "😀";
   
     return (
       <View style={styles.personContainer}>
