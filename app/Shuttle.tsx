@@ -2,7 +2,9 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, Pressable, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
-import { PersonType, VehicleType, ShuttleType } from '../logic/Types';
+import { PersonType, VehicleType, ShuttleType, StepType } from '../logic/Types';
+import { calculateMeetAtPutIn } from '../logic/logic';
+import { Vehicle } from '../components/Vehicle';
 
 type ShuttleProps = {
   people: PersonType[],
@@ -12,7 +14,8 @@ type ShuttleProps = {
 };
 
 export default function Shuttle(props: ShuttleProps) {
-  const { onClose } = props;
+  const { people, vehicles, onClose } = props;
+  const steps: StepType[] = calculateMeetAtPutIn(people, vehicles);
 
   return (
     <View style={styles.container}>
