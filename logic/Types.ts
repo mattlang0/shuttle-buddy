@@ -18,6 +18,12 @@ export type ScenarioType = {
     personId: string; // id of the person who owns this vehicle
     maxSpace: number;
   };
+
+  export type GroupType = {
+    Location: Location;
+    People: PersonType[] | [];
+    Vehicles: VehicleType[] | [];
+  }
   
   export type StepType = [
     {

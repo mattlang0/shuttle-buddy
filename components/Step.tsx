@@ -1,4 +1,4 @@
-import { StepType } from "../logic/Types";
+import { StepType, GroupType, Location, PersonType } from "../logic/Types";
 import {
     View,
     Text,
@@ -15,56 +15,44 @@ type StepProps = {
 export const Step = ({step}: StepProps) => {
     const putInGroup = step[0];
     const takeOutGroup = step[1];
-
-    const putInPeople = putInGroup.People;
-    const putInVehicles = putInGroup.Vehicles;
-    const putInPeopleNotInVehicles = putInGroup.People.filter((p)=>!p.vehicleId);
-
-    const takeOutPeople = takeOutGroup.People;
-    const takeOuVehicles = takeOutGroup.Vehicles;
-    const takeOutPeopleNotInVehicles = takeOutGroup.People.filter((p)=>!p.vehicleId);
+    const allPeople = [...putInGroup.People, ...takeOutGroup.People];
 
     return (
         <View style={styles.container}>
-            {/* Put in */}
-            <View style={styles.groupContainer}>
-                <View style={styles.locationIndicator}>
-                    <Text style={styles.locationIcon}>📍</Text>
-                    <Text style={styles.text}>Put In</Text>
-                </View>
-                <View style={styles.group}>
-                    <FlatList 
-                        data={putInVehicles}
-                        renderItem={({item}) => <Vehicle vehicle={item} people={[...putInPeople, ...takeOutPeople]}/>}
-                        keyExtractor={item => item.personId}>
-                    </FlatList>
-                    <FlatList 
-                        horizontal
-                        data={putInPeopleNotInVehicles}
-                        renderItem={({item}) => <Person person={item}/>}
-                        keyExtractor={item => item.id}>
-                    </FlatList>
-                </View>
-            </View>
-            {/* Take out */}
-            <View style={styles.groupContainer}>
-                <View style={styles.locationIndicator}>
+            <Group group={putInGroup} allPeople={allPeople} />
+            <Group group={takeOutGroup} allPeople={allPeople} />
+        </View>
+    );
+};
+
+type GroupProps = {
+    group: GroupType,
+    allPeople: PersonType[],
+};
+
+const Group = ({group, allPeople}: GroupProps) => {
+    const vehicles = group.Vehicles;
+    const peopleNotInVehicles = group.People.filter((p)=>!p.vehicleId);
+    const title = group.Location === Location.PUT_IN ? "Put In" : "Take out";
+
+    return (
+        <View style={styles.groupContainer}>
+            <View style={styles.locationIndicator}>
                 <Text style={styles.locationIcon}>📍</Text>
-                    <Text style={styles.text}>Take out</Text>
-                </View>
-                <View style={styles.group}>
-                    <FlatList 
-                        data={takeOuVehicles}
-                        renderItem={({item}) => <Vehicle vehicle={item} people={[...putInPeople, ...takeOutPeople]}/>}
-                        keyExtractor={item => item.personId}>
-                    </FlatList>
-                    <FlatList 
-                        horizontal
-                        data={takeOutPeopleNotInVehicles}
-                        renderItem={({item}) => <Person person={item}/>}
-                        keyExtractor={item => item.id}>
-                    </FlatList>
-                </View>
+                <Text style={styles.text}>{title}</Text>
+            </View>
+            <View style={styles.group}>
+                <FlatList 
+                    data={vehicles}
+                    renderItem={({item}) => <Vehicle vehicle={item} people={allPeople}/>}
+                    keyExtractor={item => item.personId}>
+                </FlatList>
+                <FlatList 
+                    horizontal
+                    data={peopleNotInVehicles}
+                    renderItem={({item}) => <Person person={item}/>}
+                    keyExtractor={item => item.id}>
+                </FlatList>
             </View>
         </View>
     );
