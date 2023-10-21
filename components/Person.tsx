@@ -28,7 +28,7 @@ export const Person = (props: PersonProps) => {
   const styles = StyleSheet.create({
     personContainer: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'center',
         width: 50,
     },

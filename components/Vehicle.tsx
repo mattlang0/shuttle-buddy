@@ -17,7 +17,6 @@ export const Vehicle = ({vehicle, people}: VehicleProps) => {
     const peopleInVehicle: PersonType[] = people.filter(
       (person) => person.vehicleId === vehicle.personId
     );
-    const emptyPersonSpots: number = vehicle.maxSpace - peopleInVehicle.length;
 
     return (
     <View style={styles.container}>
@@ -26,14 +25,10 @@ export const Vehicle = ({vehicle, people}: VehicleProps) => {
           <Text style={styles.vehicleText}>{ownersName}'s car</Text>
         </View>
         <View  style={styles.peopleContainer}>
-          <View style={styles.container}>
-            {peopleInVehicle.length > 0 &&
-              peopleInVehicle.map((person: PersonType) => {
-                return <Person key={person.id} person={person} />;
-              })}
-            {emptyPersonSpots > 0 &&
-              [...Array(emptyPersonSpots)].map((_x, i) => <Person key={i} />)}
-          </View>
+          {peopleInVehicle.length > 0 &&
+            peopleInVehicle.map((person: PersonType) => {
+              return <Person key={person.id} person={person} />;
+            })}
         </View>
       </View>
     );
@@ -42,6 +37,8 @@ export const Vehicle = ({vehicle, people}: VehicleProps) => {
 const styles = StyleSheet.create({    
     container: {
         display: 'flex',
+        flexDirection: 'row',
+        marginBottom: 10,
     },
     vehicleContainer: {
         display: 'flex',
@@ -51,7 +48,7 @@ const styles = StyleSheet.create({
         width: 100,
     },
     vehicleIcon: {
-        fontSize: 40,
+        fontSize: 30,
     },
     vehicleText: {
         fontSize: 12,

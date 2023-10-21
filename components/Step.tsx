@@ -1,10 +1,11 @@
-import { PersonType, VehicleType, StepType } from "../logic/Types";
+import { StepType } from "../logic/Types";
 import {
     View,
     Text,
     StyleSheet,
+    FlatList,
 } from 'react-native';
-import { Person } from "./Person";
+import { Vehicle } from "./Vehicle";
 
 type StepProps = {
     step: StepType;
@@ -14,6 +15,12 @@ export const Step = ({step}: StepProps) => {
     const putInGroup = step[0];
     const takeOutGroup = step[1];
 
+    const putInPeople = putInGroup.People;
+    const putInVehicles = putInGroup.Vehicles;
+
+    const takeOutPeople = takeOutGroup.People;
+    const takeOuVehicles = takeOutGroup.Vehicles;
+
     return (
         <View style={styles.container}>
             {/* Put in */}
@@ -22,16 +29,23 @@ export const Step = ({step}: StepProps) => {
                     <Text style={styles.locationIcon}>📍</Text>
                     <Text style={styles.text}>Put In</Text>
                 </View>
-                <Text style={styles.group}>Group here</Text>
+                <FlatList 
+                    data={putInVehicles}
+                    renderItem={({item}) => <Vehicle vehicle={item} people={putInPeople}/>}
+                    keyExtractor={item => item.personId}>
+                </FlatList>
             </View>
             {/* Take out */}
             <View style={styles.groupContainer}>
                 <View style={styles.locationIndicator}>
-                    <Text>📍</Text>
-                    <Text>Take Out</Text>
+                <Text style={styles.locationIcon}>📍</Text>
+                    <Text style={styles.text}>Take out</Text>
                 </View>
-                
-                <Text>Group here</Text>
+                <FlatList 
+                    data={takeOuVehicles}
+                    renderItem={({item}) => <Vehicle vehicle={item} people={takeOutPeople}/>}
+                    keyExtractor={item => item.personId}>
+                </FlatList>
             </View>
         </View>
     );
@@ -48,7 +62,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     locationIndicator: {
-        width: 100,
+        width: 60,
         alignItems: 'center',
         
     },
