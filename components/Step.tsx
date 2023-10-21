@@ -6,6 +6,7 @@ import {
     FlatList,
 } from 'react-native';
 import { Vehicle } from "./Vehicle";
+import { Person } from './Person';
 
 type StepProps = {
     step: StepType;
@@ -17,9 +18,11 @@ export const Step = ({step}: StepProps) => {
 
     const putInPeople = putInGroup.People;
     const putInVehicles = putInGroup.Vehicles;
+    const putInPeopleNotInVehicles = putInGroup.People.filter((p)=>!p.vehicleId);
 
     const takeOutPeople = takeOutGroup.People;
     const takeOuVehicles = takeOutGroup.Vehicles;
+    const takeOutPeopleNotInVehicles = takeOutGroup.People.filter((p)=>!p.vehicleId);
 
     return (
         <View style={styles.container}>
@@ -29,11 +32,19 @@ export const Step = ({step}: StepProps) => {
                     <Text style={styles.locationIcon}>📍</Text>
                     <Text style={styles.text}>Put In</Text>
                 </View>
-                <FlatList 
-                    data={putInVehicles}
-                    renderItem={({item}) => <Vehicle vehicle={item} people={putInPeople}/>}
-                    keyExtractor={item => item.personId}>
-                </FlatList>
+                <View style={styles.group}>
+                    <FlatList 
+                        data={putInVehicles}
+                        renderItem={({item}) => <Vehicle vehicle={item} people={[...putInPeople, ...takeOutPeople]}/>}
+                        keyExtractor={item => item.personId}>
+                    </FlatList>
+                    <FlatList 
+                        horizontal
+                        data={putInPeopleNotInVehicles}
+                        renderItem={({item}) => <Person person={item}/>}
+                        keyExtractor={item => item.id}>
+                    </FlatList>
+                </View>
             </View>
             {/* Take out */}
             <View style={styles.groupContainer}>
@@ -41,11 +52,19 @@ export const Step = ({step}: StepProps) => {
                 <Text style={styles.locationIcon}>📍</Text>
                     <Text style={styles.text}>Take out</Text>
                 </View>
-                <FlatList 
-                    data={takeOuVehicles}
-                    renderItem={({item}) => <Vehicle vehicle={item} people={takeOutPeople}/>}
-                    keyExtractor={item => item.personId}>
-                </FlatList>
+                <View style={styles.group}>
+                    <FlatList 
+                        data={takeOuVehicles}
+                        renderItem={({item}) => <Vehicle vehicle={item} people={[...putInPeople, ...takeOutPeople]}/>}
+                        keyExtractor={item => item.personId}>
+                    </FlatList>
+                    <FlatList 
+                        horizontal
+                        data={takeOutPeopleNotInVehicles}
+                        renderItem={({item}) => <Person person={item}/>}
+                        keyExtractor={item => item.id}>
+                    </FlatList>
+                </View>
             </View>
         </View>
     );
