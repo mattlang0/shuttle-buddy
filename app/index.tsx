@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Pressable, Modal, KeyboardAvoidingView, Platform } from 'react-native';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { StyleSheet, Pressable, Modal, KeyboardAvoidingView, Platform, Switch } from 'react-native';
 import { Text, View } from '../components/Themed';
 import AddEditEntity from './AddEditEntity';
 import Shuttle from './Shuttle';
@@ -10,7 +11,6 @@ import { isScenarioValid } from '../logic/logic';
 export default function Main() {
   const [addPersonVisible, setAddPersonVisible] = useState(false);
   const [shuttleVisible, setShuttleVisible] = useState(false);
-
   const [people, setPeople] = useState<[] | PersonType[]>([]);
   const [vehicles, setVehicles] = useState<VehicleType[]>([]);
   const [shuttleType, setShuttleType] = useState<ShuttleType>(
@@ -21,25 +21,56 @@ export default function Main() {
     return !isScenarioValid(people, vehicles, shuttleType);
   }
 
+  const toggleSwitch = () => setShuttleType((previousState) => {
+    if (previousState === ShuttleType.MEET_AT_PUT_IN) {
+      return ShuttleType.MEET_AT_TAKE_OUT
+    }
+    return ShuttleType.MEET_AT_PUT_IN
+  });
+
   return (
     <View style={styles.container}>
       
+      {/* Entity List */}
       <View style={styles.listContainer}>
         <List people={people} vehicles={vehicles} setPeople={setPeople} setVehicles={setVehicles} />
       </View>
 
-      <View style={styles.buttonContainer}>
-        <Pressable
-          style={[styles.buttonAddPerson]}
-          onPress={() => setAddPersonVisible(true)}>
-          <Text style={styles.buttonText}>Add Person</Text>
-        </Pressable>
-
+      {/* Shuttle Button */}
+      <View style={styles.shuttleBar}>
         <Pressable
           style={[styles.buttonShuttle]}
           onPress={() => setShuttleVisible(true)}
           disabled={isShuttleDisabled()}>
           <Text style={styles.buttonText}>Shuttle</Text>
+        </Pressable>
+      </View>
+
+      {/* Icon Bar */}
+      <View style={styles.iconBar}>
+        <Pressable>
+          <FontAwesome style={styles.buttonIcon} name='bars' />
+        </Pressable>
+
+        <View style={styles.separator}></View>
+
+        <View style={styles.switchContainer}>
+          <Switch
+            style={styles.switch}
+            trackColor={{false: '#3e3e3e', true: '#3e3e3e'}}
+            thumbColor={shuttleType === ShuttleType.MEET_AT_PUT_IN ? 'green' : 'orange'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={shuttleType === ShuttleType.MEET_AT_TAKE_OUT}
+          />
+          <Text style={styles.switchLabel}>{shuttleType === ShuttleType.MEET_AT_PUT_IN ? 'Meet at Put In': 'Meet at Take Out'}</Text>
+        </View>
+        
+        <View style={styles.separator}></View>
+
+        <Pressable
+          onPress={() => setAddPersonVisible(true)}>
+          <FontAwesome style={styles.buttonIcon} name='plus-circle' />
         </Pressable>
       </View>
 
@@ -82,30 +113,58 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   listContainer: {
-    flex: 8,
+    flex: 1,
     alignItems: 'stretch',
   },
-  buttonContainer: {
-    flex: 2,
+  shuttleBar: {
     alignItems: 'center',
-    justifyContent: 'space-evenly'
-  },
-  buttonAddPerson: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-    backgroundColor: 'orange',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   buttonShuttle: {
+    borderColor: 'grey',
+    borderStyle: 'solid',
+    borderWidth: 2,
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: 'green',
+    backgroundColor: 'white',
+    color: 'grey',
+    margin: 10,
   },
   buttonText: {
+    color: 'grey',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  iconBar: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'grey'
+  },
+  switchContainer: {
+    alignItems: 'center',
+    backgroundColor: 'grey',
+  },
+  switch: {
+    marginTop: 10,
+  },
+  switchLabel: {
+    color: 'white',
+    fontSize: 12,
+    margin: 5,
+    textAlign: 'center'
+  },
+  separator: {
+    flex: 1,
+  },
+  buttonIcon: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 28,
+    margin: 10,
   },
   modalView: {
     flex: 1,
