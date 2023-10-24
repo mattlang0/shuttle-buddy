@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Pressable, Modal, KeyboardAvoidingView, Platform } from 'react-native';
-import { Text, View } from '../../components/Themed';
-import AddEditEntity from '../AddEditEntity';
-import Shuttle from '../Shuttle';
-import { PersonType, VehicleType, ShuttleType } from "../../logic/Types";
-import { List } from '../../components/List';
-import { isScenarioValid } from '../../logic/logic';
+import { Text, View } from '../components/Themed';
+import AddEditEntity from './AddEditEntity';
+import Shuttle from './Shuttle';
+import { PersonType, VehicleType, ShuttleType } from "../logic/Types";
+import { List } from '../components/List';
+import { isScenarioValid } from '../logic/logic';
 
 export default function Main() {
   const [addPersonVisible, setAddPersonVisible] = useState(false);
