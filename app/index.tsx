@@ -117,9 +117,11 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   shuttleBar: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    position: 'absolute',
+    left: 100,
+    right: 100,
+    bottom: 70,
+    backgroundColor: undefined
   },
   buttonShuttle: {
     borderColor: 'grey',
@@ -128,24 +130,26 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: 'white',
     color: 'grey',
+    backgroundColor: 'white',
     margin: 10,
   },
   buttonText: {
     color: 'grey',
     fontWeight: 'bold',
+    textAlign: 'center',
     fontSize: 16,
   },
   iconBar: {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    backgroundColor: 'grey'
+    backgroundColor: 'grey',
+    maxHeight: 70,
   },
   switchContainer: {
     alignItems: 'center',
-    backgroundColor: 'grey',
+    backgroundColor: undefined,
   },
   switch: {
     marginTop: 10,
