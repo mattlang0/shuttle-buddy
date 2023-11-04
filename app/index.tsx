@@ -31,9 +31,9 @@ export default function Main() {
   return (
     <View style={styles.container}>
 
-      {/* Meet at Put In / Take Out switch */}
-      <View style={styles.meetAtContainer}>
-        <Text style={styles.meetAtTitle}>
+      {/* Input Switch: Meet at Put In / Take Out */}
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputTitle}>
           {shuttleType === ShuttleType.MEET_AT_PUT_IN ? 'Meet at Put In': 'Meet at Take Out'}
         </Text>
         <Switch
@@ -43,6 +43,21 @@ export default function Main() {
             onValueChange={toggleSwitch}
             value={shuttleType === ShuttleType.MEET_AT_TAKE_OUT}
           />
+      </View>
+
+      {/* Input Button : People, Add Person */}
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputTitle}>
+          {'People'}
+        </Text>
+        <Pressable
+          onPress={() => setAddPersonVisible(true)}
+          style={styles.row}>
+            <Text style={styles.inputSubtitle}>
+              {'Add Person'}
+            </Text>
+          <FontAwesome style={styles.buttonAddPerson} name='plus-circle' />
+        </Pressable>
       </View>
       
       {/* Entity List */}
@@ -57,20 +72,6 @@ export default function Main() {
           onPress={() => setShuttleVisible(true)}
           disabled={isShuttleDisabled()}>
           <Text style={styles.buttonText}>Shuttle</Text>
-        </Pressable>
-      </View>
-
-      {/* Icon Bar */}
-      <View style={styles.iconBar}>
-        <Pressable>
-          <FontAwesome style={styles.buttonIcon} name='bars' />
-        </Pressable>
-        
-        <View style={styles.separator}></View>
-
-        <Pressable
-          onPress={() => setAddPersonVisible(true)}>
-          <FontAwesome style={styles.buttonIcon} name='plus-circle' />
         </Pressable>
       </View>
 
@@ -112,6 +113,32 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'flex-start',
   },
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+  },
+  inputTitle: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  inputSubtitle: {
+    color: 'green',
+    textAlign: 'center',
+    fontSize: 14,
+  },
+  buttonAddPerson: {
+    color: 'green',
+    fontSize: 28,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
   listContainer: {
     flex: 1,
     alignItems: 'stretch',
@@ -122,18 +149,6 @@ const styles = StyleSheet.create({
     right: 100,
     bottom: 70,
     backgroundColor: undefined
-  },
-  meetAtContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-  },
-  meetAtTitle: {
-    color: 'black',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 18,
   },
   buttonShuttle: {
     borderColor: 'grey',
@@ -151,23 +166,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
-  },
-  iconBar: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'grey',
-    maxHeight: 70,
-  },
-  separator: {
-    flex: 1,
-  },
-  buttonIcon: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 28,
-    margin: 10,
   },
   modalView: {
     flex: 1,
