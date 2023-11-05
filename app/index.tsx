@@ -92,15 +92,11 @@ export default function Main() {
 
       {/* Shuttle Modal */}
       <Modal
-        animationType="slide"
+        animationType='fade'
         transparent={true}
         visible={shuttleVisible}
-        onRequestClose={() => {
-          setShuttleVisible(!shuttleVisible);
-        }}>
-        <View style={styles.shuttleView}>
+        onRequestClose={() => {setShuttleVisible(!shuttleVisible);}}>
           <Shuttle onClose={() => setShuttleVisible(!shuttleVisible)} people={people} vehicles={vehicles} shuttleType={shuttleType}/>
-        </View>
       </Modal>
       
     </View>
@@ -121,7 +117,7 @@ const styles = StyleSheet.create({
   },
   inputTitle: {
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: '500',
     textAlign: 'center',
     fontSize: 18,
   },
@@ -181,20 +177,5 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     maxHeight: 300,
-  },
-  shuttleView: {
-    flex: 1,
-    margin: 20,
-    borderRadius: 20,
-    padding: 5,
-    alignItems: 'stretch',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
 });

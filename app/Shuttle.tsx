@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { Pressable, StyleSheet } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { View } from '../components/Themed';
 import { PersonType, VehicleType, ShuttleType, StepType } from '../logic/Types';
 import { calculateMeetAtPutIn } from '../logic/logic';
 import { Step } from '../components/Step';
@@ -20,57 +20,45 @@ export default function Shuttle(props: ShuttleProps) {
   const [activeStep, setActiveStep] = useState(0);
 
   const nextStep = () => {
-    setActiveStep((currentstep)=>{
-      if (currentstep === steps.length - 1) {
-        return currentstep
-      }
-      return currentstep + 1
-    });
+    setActiveStep(currentstep=>currentstep === steps.length - 1 ? currentstep : currentstep + 1);
   };
 
   const previousStep = () => {
-    setActiveStep((currentstep)=>{
-      if (currentstep === 0) {
-        return currentstep
-      }
-      
-      return currentstep - 1
-    });
+    setActiveStep(currentstep=>currentstep === 0 ? currentstep : currentstep - 1);
   };
 
-  const onShare = () => {};
+  // const onShare = () => {};
 
   return (
     <View style={styles.container}>
 
-      <View style={styles.topBar}>
+      {/* Top Buttons Container */}
+      <View style={styles.topButtonsContainer}>
         <Pressable
           onPress={onClose}>
-          <FontAwesome style={styles.topBarIcon} name='close' />
+          <FontAwesome style={styles.pressableIcon} name='chevron-left' />
         </Pressable>
-        <Text style={styles.title}>Step {activeStep + 1}</Text>
-        <Pressable
+        {/* <Pressable
           onPress={onShare}>
           <FontAwesome style={styles.topBarIcon} name='share' />
-        </Pressable>
-      </View>
-      
-      <View style={styles.stepContainer}>
-        <Step step={steps[activeStep]}/>
+        </Pressable> */}
       </View>
 
-      <View style={styles.stepController}>
+      {/* Step */}
+      <Step step={steps[activeStep]} activeStep={activeStep}/>
+        
+      {/* Bottom Buttons Container */}
+      <View style={styles.bottomButtonsContainer}>
         <Pressable
-          style={[styles.button]}
           onPress={previousStep}>
-          <Text style={styles.buttonText}>{'<'}</Text>
+          <FontAwesome style={styles.pressableIcon} name='chevron-left' />
         </Pressable>
         <Pressable
-          style={[styles.button]}
           onPress={nextStep}>
-          <Text style={styles.buttonText}>{'>'}</Text>
+          <FontAwesome style={styles.pressableIcon} name='chevron-right' />
         </Pressable>
       </View>
+
     </View>
   );
 }
@@ -79,47 +67,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'stretch',
-    justifyContent: 'center',
+    paddingTop: 20,
+    backgroundColor: '#FDFFF9',
   },
-  topBar: {
+  topButtonsContainer: {
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
+    backgroundColor: undefined,
   },
-  topBarIcon: {
-    fontSize: 24,
-    margin: 10,
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 24,
-    fontWeight: 'bold',
-    margin: 10,
-  },
-  stepContainer: {
-    flex: 1,
-    alignItems: 'stretch',
-    margin: 10,
-  },
-  text: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  stepController: {
+  bottomButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+    padding: 5,
+    backgroundColor: undefined,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-    backgroundColor: '#2196F3',
+  pressableIcon: {
+    fontSize: 24,
     margin: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#2E2E2E',
   },
 });

@@ -10,15 +10,17 @@ import { Person } from './Person';
 
 type StepProps = {
     step: StepType;
+    activeStep: number;
 };
 
-export const Step = ({step}: StepProps) => {
+export const Step = ({step, activeStep}: StepProps) => {
     const putInGroup = step[0];
     const takeOutGroup = step[1];
     const allPeople = [...putInGroup.People, ...takeOutGroup.People];
 
     return (
         <View style={styles.container}>
+            <Text>Step {activeStep + 1}</Text>
             <Group group={putInGroup} allPeople={allPeople} />
             <Group group={takeOutGroup} allPeople={allPeople} />
         </View>
