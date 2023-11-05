@@ -66,12 +66,12 @@ export default function Main() {
       </View>
 
       {/* Shuttle Button */}
-      <View style={styles.shuttleBar}>
+      <View style={styles.buttonShuttleContainer}>
         <Pressable
           style={[styles.buttonShuttle]}
           onPress={() => setShuttleVisible(true)}
           disabled={isShuttleDisabled()}>
-          <Text style={styles.buttonText}>Shuttle</Text>
+          <Text style={styles.buttonShuttleText}>Shuttle</Text>
         </Pressable>
       </View>
 
@@ -143,11 +143,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
   },
-  shuttleBar: {
+  buttonShuttleContainer: {
     position: 'absolute',
-    left: 100,
-    right: 100,
-    bottom: 70,
+    left: 50,
+    right: 50,
+    bottom: 0,
     backgroundColor: undefined
   },
   buttonShuttle: {
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 10,
   },
-  buttonText: {
+  buttonShuttleText: {
     color: 'grey',
     fontWeight: 'bold',
     textAlign: 'center',
