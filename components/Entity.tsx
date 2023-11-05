@@ -64,7 +64,7 @@ export const Entity = (props: EntityProps) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingLeft: 10,
+        paddingLeft: 15,
         paddingRight: 10,
     },
     icon: {
