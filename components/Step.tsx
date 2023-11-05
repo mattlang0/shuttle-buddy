@@ -20,7 +20,8 @@ export const Step = ({step, activeStep}: StepProps) => {
 
     return (
         <View style={styles.container}>
-            <Text>Step {activeStep + 1}</Text>
+            <Text style={styles.titleStepNumber}>Step {activeStep + 1}</Text>
+
             <Group group={putInGroup} allPeople={allPeople} />
             <Group group={takeOutGroup} allPeople={allPeople} />
         </View>
@@ -39,11 +40,15 @@ const Group = ({group, allPeople}: GroupProps) => {
 
     return (
         <View style={styles.groupContainer}>
+
             <View style={styles.locationIndicator}>
+                
                 <Text style={styles.locationIcon}>📍</Text>
                 <Text style={styles.text}>{title}</Text>
             </View>
+
             <View style={styles.group}>
+
                 <FlatList 
                     data={vehicles}
                     renderItem={({item}) => <Vehicle vehicle={item} people={allPeople}/>}
@@ -56,6 +61,8 @@ const Group = ({group, allPeople}: GroupProps) => {
                     keyExtractor={item => item.id}>
                 </FlatList>
             </View>
+
+
         </View>
     );
 };
@@ -63,7 +70,11 @@ const Group = ({group, allPeople}: GroupProps) => {
 const styles = StyleSheet.create({    
     container: {
         flex: 1,
-        alignItems: 'stretch',
+        alignItems: 'center',
+    },
+    titleStepNumber: {
+        margin: 20,
+        fontSize: 20,
     },
     groupContainer: {
         flex: 1,
