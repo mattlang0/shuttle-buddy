@@ -23,7 +23,7 @@ export const List = (props: ListProps) => {
   });
   entities = entities.sort((a)=> {
     return a.vehicle ? -1 : 1;
-  })
+  });
 
   return (
     <View>

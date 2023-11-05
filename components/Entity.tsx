@@ -28,11 +28,18 @@ export const Entity = (props: EntityProps) => {
     
     return (
       <View style={styles.container}>
-        <Text style={styles.iconEntity}>{icon}</Text>
-        <Text style={styles.textName}>{name}</Text>
-        {space && <Text style={styles.textSpace}>Room for {space - 1}</Text>}
+
+        <Text style={styles.icon}>{icon}</Text>
+
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameText}>{name}</Text>
+          {space && <Text style={styles.nameSubtext}>Room for {space - 1} passengers</Text>}
+        </View>
+
+        <View style={styles.separator} />
+        
         <Pressable onPress={() => setEditEntityVisible(true)}>
-            <FontAwesome size={28} style={styles.iconEdit} name={'cog'} color={'grey'} />
+            <FontAwesome size={28} style={styles.iconEdit} name={'ellipsis-v'} color={'grey'} />
         </Pressable>
 
         {/* Add Person Modal */}
@@ -55,23 +62,32 @@ export const Entity = (props: EntityProps) => {
     container: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        paddingLeft: 10,
+        paddingRight: 10,
     },
-    iconEntity: {
-      fontSize: 35,
-      padding: 5
+    icon: {
+      fontSize: 30,
+      paddingBottom: 10,
+      paddingRight: 5,
     },
-    textName: {
-        flex: 1,
-        fontSize: 24,
+    nameContainer: {
+      display: 'flex',
     },
-    textSpace: {
-        fontSize: 14,
+    nameText: {
+        fontSize: 16,
+    },
+    nameSubtext: {
+        fontSize: 12,
         color: 'grey',
+    },
+    separator: {
+      flex: 1,
     },
     iconEdit: {
         fontSize: 25,
-        padding: 5
+        paddingRight: 13,
     },
     modalView: {
         flex: 1,
