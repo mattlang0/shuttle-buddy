@@ -92,7 +92,7 @@ export default function Main() {
 
       {/* Shuttle Modal */}
       <Modal
-        animationType='fade'
+        animationType='slide'
         transparent={true}
         visible={shuttleVisible}
         onRequestClose={() => {setShuttleVisible(!shuttleVisible);}}>
