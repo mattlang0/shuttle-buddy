@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { StyleSheet, Pressable, Modal, KeyboardAvoidingView, Platform, Switch } from 'react-native';
+import { StyleSheet, Pressable, Modal, Platform, Switch } from 'react-native';
 import { Text, View } from '../components/Themed';
 import AddEditEntity from './AddEditEntity';
 import Shuttle from './Shuttle';
@@ -83,11 +83,7 @@ export default function Main() {
         onRequestClose={() => {
           setAddPersonVisible(!addPersonVisible);
         }}>
-        <KeyboardAvoidingView 
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.modalView}>
-          <AddEditEntity onClose={() => setAddPersonVisible(!addPersonVisible)} setPeople={setPeople} setVehicles={setVehicles} people={people}/>
-        </KeyboardAvoidingView>
+        <AddEditEntity onClose={() => setAddPersonVisible(!addPersonVisible)} setPeople={setPeople} setVehicles={setVehicles} people={people}/>
       </Modal>
 
       {/* Shuttle Modal */}
@@ -179,20 +175,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
-  },
-  modalView: {
-    flex: 1,
-    margin: 20,
-    borderRadius: 20,
-    padding: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    maxHeight: 300,
   },
 });

@@ -1,6 +1,6 @@
 import React, { SetStateAction, Dispatch } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, Pressable, StyleSheet, TextInput } from 'react-native';
+import { Platform, Pressable, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { PersonType, VehicleType, EntityType } from '../logic/Types';
 
@@ -112,7 +112,9 @@ export default function AddEditEntity(props: AddEditEntityProps) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
 
       <Text style={styles.title}>{entity ? 'Edit' : 'Add'} Person</Text>
 
@@ -167,16 +169,28 @@ export default function AddEditEntity(props: AddEditEntityProps) {
         </Pressable>
       </View>
 
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    margin: 20,
+    borderRadius: 20,
+    padding: 22,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    backgroundColor: 'white',
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    maxHeight: 300,
     alignItems: 'stretch',
     justifyContent: 'space-between',
-    padding: 22,
   },
   title: {
     fontSize: 20,
