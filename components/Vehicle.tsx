@@ -12,51 +12,51 @@ type VehicleProps = {
 };
 
 export const Vehicle = ({vehicle, people}: VehicleProps) => {
-    
-    const ownersName: string = people.find(p=>p.id === vehicle.personId)?.name || '';
-    const peopleInVehicle: PersonType[] = people.filter(
-      (person) => person.vehicleId === vehicle.personId
-    );
+  const ownersName: string = people.find(p=>p.id === vehicle.personId)?.name || '';
+  const peopleInVehicle: PersonType[] = people.filter(
+    (person) => person.vehicleId === vehicle.personId
+  );
 
-    return (
+  return (
     <View style={styles.container}>
-        <View style={styles.vehicleContainer}>
-          <Text style={styles.vehicleIcon}>🚗</Text>
-          <Text style={styles.vehicleText}>{ownersName}'s car</Text>
-        </View>
-        <View  style={styles.peopleContainer}>
-          {peopleInVehicle.length > 0 &&
-            peopleInVehicle.map((person: PersonType) => {
-              return <Passenger key={person.id} person={person} />;
-            })}
-        </View>
+
+      {/* Title */}
+      <View style={styles.vehicleContainer}>
+        <Text style={styles.vehicleIcon}>🚗</Text>
+        <Text style={styles.vehicleText}>{ownersName}'s car</Text>
       </View>
-    );
+
+      {/* Passengers */}
+      <View  style={styles.peopleContainer}>
+        {peopleInVehicle.length > 0 &&
+          peopleInVehicle.map((person: PersonType) => {
+            return <Passenger key={person.id} person={person} />;
+          })}
+      </View>
+
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({    
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginBottom: 10,
-    },
-    vehicleContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 100,
-    },
-    vehicleIcon: {
-        fontSize: 30,
-    },
-    vehicleText: {
-        fontSize: 12,
-    },
-    peopleContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        flexGrow: 1,
-    },
-  });
+  container: {
+    marginLeft: 10
+  },
+  vehicleContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  vehicleIcon: {
+    marginHorizontal: 10,
+    fontSize: 18,
+  },
+  vehicleText: {
+    fontSize: 18,
+    fontWeight: '300',
+  },
+  peopleContainer: {
+    flexWrap: 'wrap',
+    paddingLeft: 50,
+    gap: -5,
+  },
+});

@@ -10,20 +10,22 @@ import { Person } from './Person';
 
 type StepProps = {
     step: StepType;
-    activeStep: number;
 };
 
-export const Step = ({step, activeStep}: StepProps) => {
+export const Step = ({step}: StepProps) => {
     const putInGroup = step[0];
     const takeOutGroup = step[1];
     const allPeople = [...putInGroup.People, ...takeOutGroup.People];
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleStepNumber}>Step {activeStep + 1}</Text>
 
+            {/* Put In Group */}
             <Group group={putInGroup} allPeople={allPeople} />
+
+            {/* Take Out Group */}
             <Group group={takeOutGroup} allPeople={allPeople} />
+            
         </View>
     );
 };
@@ -36,32 +38,35 @@ type GroupProps = {
 const Group = ({group, allPeople}: GroupProps) => {
     const vehicles = group.Vehicles;
     const peopleNotInVehicles = group.People.filter((p)=>!p.vehicleId);
-    const title = group.Location === Location.PUT_IN ? "Put In" : "Take out";
+    const title = group.Location === Location.PUT_IN ? "Put in" : "Take out";
+    const icon = group.Location === Location.PUT_IN ? "📍" : "🏁";
 
     return (
         <View style={styles.groupContainer}>
 
-            <View style={styles.locationIndicator}>
-                
-                <Text style={styles.locationIcon}>📍</Text>
-                <Text style={styles.text}>{title}</Text>
+            {/* Put in / Take out Title */}
+            <View style={styles.locationTitle}>
+                <Text style={styles.locationIcon}>{icon}</Text>
+                <Text style={styles.locationText}>{title}</Text>
             </View>
 
             <View style={styles.group}>
 
-                <FlatList 
+                {/* Vehicles */}
+                {vehicles.length > 0 && <FlatList 
                     data={vehicles}
                     renderItem={({item}) => <Vehicle vehicle={item} people={allPeople}/>}
                     keyExtractor={item => item.personId}>
-                </FlatList>
-                <FlatList 
-                    horizontal
+                </FlatList>}
+
+                {/* People */}
+                {peopleNotInVehicles.length > 0 && <FlatList
                     data={peopleNotInVehicles}
                     renderItem={({item}) => <Person person={item}/>}
                     keyExtractor={item => item.id}>
-                </FlatList>
-            </View>
+                </FlatList>}
 
+            </View>
 
         </View>
     );
@@ -70,29 +75,25 @@ const Group = ({group, allPeople}: GroupProps) => {
 const styles = StyleSheet.create({    
     container: {
         flex: 1,
-        alignItems: 'center',
-    },
-    titleStepNumber: {
-        margin: 20,
-        fontSize: 20,
+        alignItems: 'stretch',
     },
     groupContainer: {
-        flex: 1,
+        alignItems: 'stretch',
+        flexGrow: 1,
+    },
+    locationTitle: {
+        paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
     },
-    locationIndicator: {
-        width: 60,
-        alignItems: 'center',
-        
-    },
     group: {
-        flex: 1,
+        flexDirection: 'row',
     },
     locationIcon: {
-        fontSize: 30,
+        fontSize: 20,
     },
-    text: {
-        fontSize: 15,
-    }
-  });
+    locationText: {
+        fontWeight: '400',
+        fontSize: 20,
+    },
+});

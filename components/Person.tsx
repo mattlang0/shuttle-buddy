@@ -3,7 +3,7 @@ import {
     View,
     Text,
     StyleSheet,
-    } from 'react-native';
+  } from 'react-native';
 
 type PersonProps = {
     person: PersonType;
@@ -23,15 +23,17 @@ export const Person = (props: PersonProps) => {
 
   const styles = StyleSheet.create({
     personContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        width: 50,
+      flexDirection: 'row',
+      paddingLeft: 25,
+      marginTop: 10,
     },
     personIcon: {
       fontSize: 20,
+      marginHorizontal: 5,
     },
     personText: {
-        fontSize: 12,
+      fontSize: 12,
+      lineHeight: 24,
+      fontWeight: '300',
     },
   });
