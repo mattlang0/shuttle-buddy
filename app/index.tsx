@@ -53,10 +53,10 @@ export default function Main() {
         <Pressable
           onPress={() => setAddPersonVisible(true)}
           style={styles.row}>
-            <Text style={styles.inputSubtitle}>
+            <Text style={styles.inputAddPersonText}>
               {'Add Person'}
             </Text>
-          <FontAwesome style={styles.buttonAddPerson} name='plus-circle' />
+            <FontAwesome style={styles.inputAddPersonButton} name='plus-circle' />
         </Pressable>
       </View>
       
@@ -113,16 +113,16 @@ const styles = StyleSheet.create({
   },
   inputTitle: {
     color: 'black',
-    fontWeight: '500',
+    fontWeight: '400',
     textAlign: 'center',
     fontSize: 18,
   },
-  inputSubtitle: {
+  inputAddPersonText: {
     color: 'green',
     textAlign: 'center',
     fontSize: 14,
   },
-  buttonAddPerson: {
+  inputAddPersonButton: {
     color: 'green',
     fontSize: 28,
   },
