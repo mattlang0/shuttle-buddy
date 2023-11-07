@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
   },
   titleShuttleBuddy: {
     fontSize: 25,
-    fontWeight: '600',
+    fontWeight: '100',
   },
   titleStepNumber: {
     margin: 10,
     fontSize: 25,
-    fontWeight: '100',
+    fontWeight: '600',
     textAlign: 'center',
   },
   topButtonsContainer: {
