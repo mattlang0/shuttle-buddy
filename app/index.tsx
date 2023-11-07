@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
   },
   buttonShuttleContainer: {
     position: 'absolute',
-    left: 50,
-    right: 50,
+    left: 40,
+    right: 40,
     bottom: 0,
     backgroundColor: undefined
   },
@@ -155,7 +155,6 @@ const styles = StyleSheet.create({
   },
   buttonShuttleDisabled: {
     borderColor: 'grey',
-    borderStyle: 'solid',
     borderWidth: 2,
     borderRadius: 20,
     padding: 10,

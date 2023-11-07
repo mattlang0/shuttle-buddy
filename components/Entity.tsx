@@ -42,7 +42,7 @@ export const Entity = (props: EntityProps) => {
             <FontAwesome size={28} style={styles.iconEdit} name={'ellipsis-v'} color={'grey'} />
         </Pressable>
 
-        {/* Add Person Modal */}
+        {/* Edit Person Modal */}
         <Modal
             animationType="slide"
             transparent={true}
@@ -50,9 +50,7 @@ export const Entity = (props: EntityProps) => {
             onRequestClose={() => {
             setEditEntityVisible(!editEntityVisible);
             }}>
-            <View style={styles.modalView}>
             <AddEditEntity onClose={() => setEditEntityVisible(!editEntityVisible)} setPeople={setPeople} setVehicles={setVehicles} people={people} entity={entity}/>
-            </View>
         </Modal>
       </View>
     );
@@ -66,11 +64,10 @@ export const Entity = (props: EntityProps) => {
         alignItems: 'center',
         paddingLeft: 15,
         paddingRight: 10,
+        paddingBottom: 10,
     },
     icon: {
       fontSize: 30,
-      paddingBottom: 10,
-      paddingRight: 5,
     },
     nameContainer: {
       display: 'flex',
@@ -89,21 +86,4 @@ export const Entity = (props: EntityProps) => {
         fontSize: 25,
         paddingRight: 13,
     },
-    modalView: {
-        flex: 1,
-        marginTop: 180,
-        marginBottom: 180,
-        margin: 20,
-        borderRadius: 20,
-        padding: 5,
-        alignItems: 'stretch',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-      },
   });

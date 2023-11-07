@@ -1,4 +1,5 @@
 import React, { SetStateAction, Dispatch } from 'react';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, Pressable, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native';
 import { Text, View } from '../components/Themed';
@@ -16,6 +17,7 @@ export default function AddEditEntity(props: AddEditEntityProps) {
   const { onClose, setPeople, setVehicles, people, entity } = props;
   const [name, onChangeName] = React.useState(entity ? entity.person.name : '');
   const [space, onChangeSpace] = React.useState(entity?.vehicle? entity.vehicle.maxSpace - 1 : 0);
+  const maxSpace: number = 10;
 
   const onSaveClick = () => {
     if (entity) {
@@ -89,7 +91,7 @@ export default function AddEditEntity(props: AddEditEntityProps) {
   };
 
   const increaseSpace = () => {
-    if (space < 10) {
+    if (space < maxSpace) {
       onChangeSpace(space + 1);
     }
   };
@@ -111,62 +113,109 @@ export default function AddEditEntity(props: AddEditEntityProps) {
     return isDisabled;
   };
 
+  const isDeleteDisabled = () => {
+    return !!!entity;
+  };
+
+  const isMinusDisabled = () => {
+    return space === 0;
+  };
+
+  const isPlusDisabled = () => {
+    return space === maxSpace
+  };
+
   return (
     <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
 
-      <Text style={styles.title}>{entity ? 'Edit' : 'Add'} Person</Text>
+      <View style={styles.modal}>
 
-      <TextInput
-        style={styles.nameInput}
-        onChangeText={onChangeName}
-        value={name}
-        placeholder='Name'
-        autoFocus
-      />
-      <View style={styles.spaceContainer}>
-        <Text style={styles.textSpaceLabel}>
-          Space available:
-        </Text>
-        <View style={styles.spaceContainer}>
+
+        {/* Top Buttons Container */}
+        <View style={styles.topButtonsContainer}>
+          {/* Back button */}
           <Pressable
-            style={[styles.buttonDecreaseIncrease]}
-            onPress={decreaseSpace}>
-            <Text style={styles.buttonText}>-</Text>
+            onPress={onClose}>
+            <FontAwesome style={styles.pressableIcon} name='angle-left' />
           </Pressable>
-          <Text style={styles.textSpaceLabel}>
-            {space === 0 ? 'No Car' : space}
-          </Text>
-          <Pressable
-            style={[styles.buttonDecreaseIncrease]}
-            onPress={increaseSpace}>
-            <Text style={styles.buttonText}>+</Text>
+
+          {/*  Title */}
+          <Text style={styles.title}>{entity ? 'Edit' : 'Add'} Person</Text>
+
+          {/* Share button */}
+          <Pressable>
+            <FontAwesome style={[styles.pressableIcon, {opacity: 0}]} name='long-arrow-up' />
           </Pressable>
         </View>
-      </View>
+        
 
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+        {/* Name Input */}
+        <View style={styles.inputContainer}>
+          <Text style={styles.icon}>{space > 0 ? "🚗" : "🧍"}</Text>
+          <TextInput
+            style={styles.inputName}
+            onChangeText={onChangeName}
+            value={name}
+            placeholder='Name'
+          />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        {entity ? 
-        <Pressable
-          style={[styles.buttonDelete]}
-          onPress={onDeleteClick}>
-          <Text style={styles.buttonText}>Delete</Text>
-        </Pressable> : 
-        <Pressable
-          style={[styles.buttonClose]}
-          onPress={onClose}>
-          <Text style={styles.buttonText}>Cancel</Text>
-        </Pressable>}
-        <Pressable
-          disabled={isSaveDisabled()}
-          style={[styles.buttonSave]}
-          onPress={onSaveClick}>
-          <Text style={styles.buttonText}>Save</Text>
-        </Pressable>
+        {/* Space available Input */}
+        <View style={styles.inputContainer}>
+
+          {/* Title */}
+          <Text style={styles.inputTitle}>
+            Space available:
+          </Text>
+
+          <View style={styles.inputSpaceContainer}>
+            {/* minus */}
+            <Pressable
+              onPress={decreaseSpace}>
+              <FontAwesome style={isMinusDisabled() ? styles.pressableIconDisabled : styles.iconPlusMinus} name='minus-circle' />
+            </Pressable>
+
+            {/* # / No Car */}
+            <Text style={styles.inputSpaceValue}>
+              {space === 0 ? 'No Car' : space}
+            </Text>
+
+            {/* plus */}
+            <Pressable
+              onPress={increaseSpace}>
+              <FontAwesome style={isPlusDisabled() ? styles.pressableIconDisabled : styles.iconPlusMinus} name='plus-circle' />
+            </Pressable>
+          </View>
+
+        </View>
+
+        {/* Use a light status bar on iOS to account for the black space above the modal */}
+        <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+
+        {/* Save */}
+        <View style={styles.buttonContainer}>
+          <Pressable
+            style={styles.buttonSave}
+            onPress={onSaveClick}
+            disabled={isSaveDisabled()}>
+            <Text style={styles.buttonSaveText}>Save</Text>
+          </Pressable>
+        </View>
+
+        {/* Delete */}
+        <View style={styles.buttonContainer}>
+          <Pressable
+            style={isDeleteDisabled() ? styles.buttonDeleteDisabled : styles.buttonDelete}
+            onPress={onDeleteClick}
+            disabled={isDeleteDisabled()}>
+            <Text style={isDeleteDisabled() ? styles.buttonDeleteTextDisabled : styles.buttonDeleteText}>
+              <FontAwesome style={{}} size={20} name='trash' /> Remove
+            </Text>
+          </Pressable>
+        </View>
+
       </View>
 
     </KeyboardAvoidingView>
@@ -176,83 +225,119 @@ export default function AddEditEntity(props: AddEditEntityProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 20,
-    borderRadius: 20,
-    padding: 22,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    justifyContent: 'flex-end',
+  },
+  modal: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingBottom: 10,
     backgroundColor: 'white',
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    maxHeight: 300,
-    alignItems: 'stretch',
+    borderColor: 'grey',
+    borderWidth: 1,
+    gap: 15,
+  },
+  topButtonsContainer: {
+    alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 12,
-
-  },
-  spaceContainer: {
-    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-  },
-  spaceInputContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  textSpaceLabel: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  buttonDecreaseIncrease: {
-    backgroundColor: 'grey',
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+    backgroundColor: undefined,
   },
   buttonClose: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2,
     backgroundColor: '#2196F3',
+  },
+  title: {
+    margin: 10,
+    fontSize: 20,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+  },
+  inputName: {
+    borderColor: 'grey',
+    borderBottomWidth: 1,
+    flex: 1,
+    padding: 10,
+  },
+  inputTitle: {
+    color: 'black',
+    fontWeight: '400',
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  inputSpaceContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  inputSpaceValue: {
+    color: 'black',
+    fontWeight: '400',
+    textAlign: 'center',
+    fontSize: 16,
+    width: 60,
+  },
+  buttonContainer: {
+    paddingHorizontal: 20,
   },
   buttonSave: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2,
     backgroundColor: 'green',
+  },
+  buttonSaveText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 16,
   },
   buttonDelete: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2,
     backgroundColor: 'red',
   },
-  buttonText: {
+  buttonDeleteDisabled: {
+    borderColor: 'grey',
+    borderWidth: 0,
+    borderRadius: 20,
+    padding: 10,
+    color: 'grey',
+    backgroundColor: 'white',
+  },
+  buttonDeleteText: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 16,
   },
-  nameInput: {
-    height: 40,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
+  buttonDeleteTextDisabled: {
+    color: 'grey',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  iconPlusMinus: {
+    fontSize: 28,
+    color: 'green',
+  },
+  pressableIconDisabled: {
+    fontSize: 28,
+    color: 'grey',
+  },
+  icon: {
+    fontSize: 30,
+  },
+  pressableIcon: {
+    fontSize: 28,
+    marginHorizontal: 15,
+    color: '#2E2E2E',
   },
 });
