@@ -197,10 +197,10 @@ export default function AddEditEntity(props: AddEditEntityProps) {
         {/* Save */}
         <View style={styles.buttonContainer}>
           <Pressable
-            style={styles.buttonSave}
+            style={isSaveDisabled() ? styles.buttonSaveDisabled : styles.buttonSave}
             onPress={onSaveClick}
             disabled={isSaveDisabled()}>
-            <Text style={styles.buttonSaveText}>Save</Text>
+            <Text style={isSaveDisabled() ? styles.buttonSaveTextDisabled : styles.buttonSaveText}>Save</Text>
           </Pressable>
         </View>
 
@@ -259,10 +259,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
+    gap: 5,
   },
   inputName: {
     borderColor: 'grey',
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    borderRadius: 20,
     flex: 1,
     padding: 10,
   },
@@ -293,7 +295,18 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'green',
   },
+  buttonSaveDisabled: {
+    borderRadius: 20,
+    padding: 10,
+    backgroundColor: 'grey',
+  },
   buttonSaveText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  buttonSaveTextDisabled: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',

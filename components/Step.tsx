@@ -78,16 +78,19 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
     },
     groupContainer: {
-        alignItems: 'stretch',
-        flexGrow: 1,
+        alignItems: 'center',
+        backgroundColor: 'rgba(52, 52, 52, 0.9)',
+        borderRadius: 20,
+        margin: 10,
+        padding: 10,
+    },
+    group: {
+        flexDirection: 'row',
     },
     locationTitle: {
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    group: {
-        flexDirection: 'row',
     },
     locationIcon: {
         fontSize: 20,
@@ -95,5 +98,6 @@ const styles = StyleSheet.create({
     locationText: {
         fontWeight: '400',
         fontSize: 20,
+        color: 'white',
     },
 });

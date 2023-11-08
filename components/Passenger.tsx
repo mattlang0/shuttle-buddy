@@ -28,10 +28,12 @@ const styles = StyleSheet.create({
   personIcon: {
     fontSize: 20,
     marginHorizontal: 5,
+    color: 'white',
   },
   personText: {
     fontSize: 12,
     lineHeight: 16,
     fontWeight: '300',
+    color: 'white',
   },
 });

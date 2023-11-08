@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
   vehicleText: {
     fontSize: 18,
     fontWeight: '300',
+    color: 'white',
   },
   peopleContainer: {
     flexWrap: 'wrap',

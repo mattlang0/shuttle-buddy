@@ -35,5 +35,6 @@ export const Person = (props: PersonProps) => {
       fontSize: 12,
       lineHeight: 24,
       fontWeight: '300',
+      color: 'white',
     },
   });

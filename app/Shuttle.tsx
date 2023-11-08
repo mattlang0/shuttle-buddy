@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Text, Pressable, StyleSheet } from 'react-native';
+import { Text, Pressable, StyleSheet, ImageBackground } from 'react-native';
 import { View } from '../components/Themed';
 import { PersonType, VehicleType, ShuttleType, StepType } from '../logic/Types';
 import { calculateMeetAtPutIn } from '../logic/logic';
@@ -28,46 +28,55 @@ export default function Shuttle(props: ShuttleProps) {
 
   const onShare = () => {};
 
+
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('../assets/images/1.png')} resizeMode='cover' style={styles.image}>
 
-      {/* Top Buttons Container */}
-      <View style={styles.topButtonsContainer}>
+        {/* Top Buttons Container */}
+        <View style={styles.topButtonsContainer}>
 
-        {/* Back button */}
-        <Pressable
-          onPress={onClose}>
-          <FontAwesome style={styles.pressableIcon} name='angle-left' />
-        </Pressable>
+          {/* Back button */}
+          <Pressable
+            onPress={onClose}>
+            <FontAwesome style={styles.pressableIcon} name='angle-left' />
+          </Pressable>
 
-        {/* Shuttle Buddy Step # Title */}
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleShuttleBuddy}>Shuttle Buddy |</Text>
-            <Text style={styles.titleStepNumber}>Step {activeStep + 1}</Text>
+          {/* Shuttle Buddy Step # Title */}
+          <View style={styles.titleContainer}>
+              <Text style={styles.titleShuttleBuddy}>Shuttle Buddy |</Text>
+              <Text style={styles.titleStepNumber}>Step {activeStep + 1}</Text>
+          </View>
+
+          {/* Share button */}
+          <Pressable
+            onPress={onShare}>
+            <FontAwesome style={styles.pressableIcon} name='long-arrow-up' />
+          </Pressable>
+
         </View>
 
-        {/* Share button */}
-        <Pressable
-          onPress={onShare}>
-          <FontAwesome style={[styles.pressableIcon, {color: '#C9C9C9'}]} name='long-arrow-up' />
-        </Pressable>
-
-      </View>
-
-      {/* Step */}
-      <Step step={steps[activeStep]} />
-        
-      {/* Bottom Buttons Container */}
-      <View style={styles.bottomButtonsContainer}>
-        <Pressable
-          onPress={previousStep}>
-          <FontAwesome style={styles.pressableIcon} name='chevron-left' />
-        </Pressable>
-        <Pressable
-          onPress={nextStep}>
-          <FontAwesome style={styles.pressableIcon} name='chevron-right' />
-        </Pressable>
-      </View>
+        {/* Step */}
+        <Step step={steps[activeStep]} />
+          
+        {/* Bottom Buttons Container */}
+        <View style={styles.bottomButtonsContainer}>
+          <Pressable
+            onPress={previousStep}>
+              <View style={styles.nextPreviousButton}>
+                <FontAwesome style={styles.pressableIconLeftRight} name='chevron-left' />
+                <Text style={styles.nextPreviousText}>Back</Text>
+              </View>
+          </Pressable>
+          <Pressable
+            onPress={nextStep}>
+              <View style={styles.nextPreviousButton}>
+                <Text style={styles.nextPreviousText}>Next</Text>
+                <FontAwesome style={styles.pressableIconLeftRight} name='chevron-right' />
+              </View>
+          </Pressable>
+        </View>
+      </ImageBackground>
 
     </View>
   );
@@ -77,14 +86,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'stretch',
-    paddingTop: 20,
-    backgroundColor: '#FDFFF9',
   },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: 20,
+    backgroundColor: undefined,
   },
   titleShuttleBuddy: {
     fontSize: 25,
@@ -103,10 +111,10 @@ const styles = StyleSheet.create({
     backgroundColor: undefined,
   },
   bottomButtonsContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0, 
+    // position: 'absolute',
+    // bottom: 0,
+    // left: 0,
+    // right: 0, 
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 20,
@@ -117,5 +125,23 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginHorizontal: 15,
     color: '#2E2E2E',
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  nextPreviousButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: undefined,
+  },
+  nextPreviousText: {
+    fontSize: 20,
+    color: 'white',
+  },
+  pressableIconLeftRight: {
+    fontSize: 20,
+    marginHorizontal: 15,
+    color: 'white',
   },
 });
