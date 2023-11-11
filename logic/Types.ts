@@ -1,6 +1,7 @@
 export type ScenarioType = {
-    People: PersonType[];
-    Vehicles: VehicleType[];
+    people: PersonType[];
+    vehicles: VehicleType[];
+    shuttleType: ShuttleType;
   };
   
   export type EntityType = {

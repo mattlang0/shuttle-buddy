@@ -1,22 +1,26 @@
 import React, { SetStateAction, Dispatch } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, Pressable, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native';
+import { Platform, Pressable, StyleSheet, TextInput, KeyboardAvoidingView, Modal } from 'react-native';
 import { Text, View } from '../components/Themed';
-import { PersonType, VehicleType, EntityType } from '../logic/Types';
+import { PersonType, VehicleType, EntityType, ScenarioType, ShuttleType } from '../logic/Types';
+import QRCodeScanner from './QRCodeScanner';
 
 type AddEditEntityProps = {
   onClose:()=>void,
   setPeople: Dispatch<SetStateAction<[] | PersonType[]>>,
   setVehicles: Dispatch<SetStateAction<[] | VehicleType[]>>,
+  setShuttleType?: Dispatch<SetStateAction<ShuttleType>>,
+  setShuttleVisible?: Dispatch<SetStateAction<boolean>>,
   people: PersonType[]
   entity?: EntityType;
 };
 
 export default function AddEditEntity(props: AddEditEntityProps) {
-  const { onClose, setPeople, setVehicles, people, entity } = props;
+  const { onClose, setPeople, setVehicles, setShuttleType, setShuttleVisible, people, entity } = props;
   const [name, onChangeName] = React.useState(entity ? entity.person.name : '');
   const [space, onChangeSpace] = React.useState(entity?.vehicle? entity.vehicle.maxSpace - 1 : 0);
+  const [qrScannerVisible, setQrScannerVisible] = React.useState(false);
   const maxSpace: number = 10;
 
   const onSaveClick = () => {
@@ -125,6 +129,18 @@ export default function AddEditEntity(props: AddEditEntityProps) {
     return space === maxSpace
   };
 
+  const onQRScannerClose = (data? : ScenarioType) => {
+    setQrScannerVisible(false);
+
+    if (data) {
+      setPeople(data.people);
+      setVehicles(data.vehicles);
+      setShuttleType && setShuttleType(data.shuttleType);
+      onClose();
+      setShuttleVisible && setShuttleVisible(true);
+    }
+  };
+
   return (
     <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -144,10 +160,14 @@ export default function AddEditEntity(props: AddEditEntityProps) {
           {/*  Title */}
           <Text style={styles.title}>{entity ? 'Edit' : 'Add'} Person</Text>
 
-          {/* Share button */}
-          <Pressable>
-            <FontAwesome style={styles.pressableIcon} name='qrcode' />
+          {/* QR Code Scanner */}
+          {entity ? 
+          <FontAwesome style={styles.hiddenButton} name='qrcode' /> : 
+          <Pressable
+              onPress={()=>{setQrScannerVisible(true)}}>
+              <FontAwesome style={styles.pressableIcon} name='qrcode' />
           </Pressable>
+          }
         </View>
         
 
@@ -217,6 +237,15 @@ export default function AddEditEntity(props: AddEditEntityProps) {
         </View>
 
       </View>
+
+      {/* QRCode Scanner Modal */}
+      <Modal
+          animationType="slide"
+          transparent={true}
+          visible={qrScannerVisible}
+          onRequestClose={()=>onQRScannerClose}>
+          <QRCodeScanner onClose={onQRScannerClose} />
+      </Modal>
 
     </KeyboardAvoidingView>
   );
@@ -347,5 +376,10 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginHorizontal: 15,
     color: '#2E2E2E',
+  },
+  hiddenButton: {
+    fontSize: 28,
+    marginHorizontal: 15,
+    color: 'white',
   },
 });

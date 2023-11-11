@@ -92,7 +92,7 @@ export default function Main() {
         onRequestClose={() => {
           setAddPersonVisible(!addPersonVisible);
         }}>
-        <AddEditEntity onClose={() => setAddPersonVisible(!addPersonVisible)} setPeople={setPeople} setVehicles={setVehicles} people={people}/>
+        <AddEditEntity onClose={() => setAddPersonVisible(!addPersonVisible)} setPeople={setPeople} setVehicles={setVehicles} setShuttleType={setShuttleType} setShuttleVisible={setShuttleVisible} people={people}/>
       </Modal>
 
       {/* Shuttle Modal */}
