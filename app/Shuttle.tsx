@@ -87,11 +87,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
   },
+  topButtonsContainer: {
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    backgroundColor: undefined,
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 20,
+    marginTop: 20,
     backgroundColor: undefined,
   },
   titleShuttleBuddy: {
@@ -103,12 +109,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '600',
     textAlign: 'center',
-  },
-  topButtonsContainer: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    backgroundColor: undefined,
   },
   bottomButtonsContainer: {
     // position: 'absolute',
