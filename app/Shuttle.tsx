@@ -26,6 +26,14 @@ export default function Shuttle(props: ShuttleProps) {
     setActiveStep(currentstep=>currentstep === 0 ? currentstep : currentstep - 1);
   };
 
+  const isBackButtonDisabled = () => {
+    return activeStep === 0;
+  }
+
+  const isNextButtonDisabled = () => {
+    return activeStep === steps.length - 1
+  }
+
   const onShare = () => {};
 
 
@@ -64,15 +72,15 @@ export default function Shuttle(props: ShuttleProps) {
           <Pressable
             onPress={previousStep}>
               <View style={styles.nextPreviousButton}>
-                <FontAwesome style={styles.pressableIconLeftRight} name='chevron-left' />
-                <Text style={styles.nextPreviousText}>Back</Text>
+                <FontAwesome style={isBackButtonDisabled() ? styles.pressableIconLeftRightDisabled : styles.pressableIconLeftRight} name='chevron-left' />
+                <Text style={isBackButtonDisabled() ? styles.nextPreviousTextDisabled : styles.nextPreviousText}>Back</Text>
               </View>
           </Pressable>
           <Pressable
             onPress={nextStep}>
               <View style={styles.nextPreviousButton}>
-                <Text style={styles.nextPreviousText}>Next</Text>
-                <FontAwesome style={styles.pressableIconLeftRight} name='chevron-right' />
+                <Text style={isNextButtonDisabled() ? styles.nextPreviousTextDisabled : styles.nextPreviousText }>Next</Text>
+                <FontAwesome style={isNextButtonDisabled() ? styles.pressableIconLeftRightDisabled : styles.pressableIconLeftRight} name='chevron-right' />
               </View>
           </Pressable>
         </View>
@@ -113,8 +121,9 @@ const styles = StyleSheet.create({
   bottomButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 20,
-    margin: 10,
+    gap: 40,
+    padding: 10,
+    marginBottom: 10,
     backgroundColor: undefined,
   },
   pressableIcon: {
@@ -128,16 +137,30 @@ const styles = StyleSheet.create({
   },
   nextPreviousButton: {
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: undefined,
+    alignItems: 'baseline',
+    alignContent: 'flex-end',
+    backgroundColor: 'rgba(52, 52, 52, 0.9)',
+    padding: 5,
+    borderRadius: 20,
   },
   nextPreviousText: {
     fontSize: 20,
+    paddingHorizontal: 10,
     color: 'white',
+  },
+  nextPreviousTextDisabled: {
+    fontSize: 20,
+    paddingHorizontal: 10,
+    color: 'grey',
   },
   pressableIconLeftRight: {
     fontSize: 20,
-    marginHorizontal: 15,
+    marginHorizontal: 5,
     color: 'white',
+  },
+  pressableIconLeftRightDisabled: {
+    fontSize: 20,
+    marginHorizontal: 5,
+    color: 'grey',
   },
 });
