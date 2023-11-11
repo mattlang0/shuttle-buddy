@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { StyleSheet, Pressable, Modal, Platform, Switch } from 'react-native';
+import { StyleSheet, Pressable, Modal, Image, Switch } from 'react-native';
 import { Text, View } from '../components/Themed';
 import AddEditEntity from './AddEditEntity';
 import Shuttle from './Shuttle';
@@ -59,12 +59,21 @@ export default function Main() {
             <FontAwesome style={styles.inputAddPersonButton} name='plus-circle' />
         </Pressable>
       </View>
-      
-      {/* Entity List */}
-      <View style={styles.listContainer}>
-        <List people={people} vehicles={vehicles} setPeople={setPeople} setVehicles={setVehicles} />
-      </View>
 
+      {people.length > 0 ? 
+        <View style={styles.listContainer}>
+          <List people={people} vehicles={vehicles} setPeople={setPeople} setVehicles={setVehicles} />
+        </View> : 
+        <View style={styles.noPeopleContainer}>
+          <Text style={styles.noPeopleText}>
+            Click 'Add Person' to begin
+          </Text>
+          <Image
+            style={styles.noPeopleImage}
+            source={require('../assets/images/2.png')}
+          />
+        </View>}
+      
       {/* Shuttle Button */}
       <View style={styles.buttonShuttleContainer}>
         <Pressable
@@ -175,4 +184,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
   },
+  noPeopleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noPeopleText: {
+    fontWeight: "500",
+    marginBottom: -30,
+  },
+  noPeopleImage: {
+    width: 200,
+    height: 200,
+  }
 });
