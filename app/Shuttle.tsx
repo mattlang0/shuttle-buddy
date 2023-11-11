@@ -111,10 +111,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   bottomButtonsContainer: {
-    // position: 'absolute',
-    // bottom: 0,
-    // left: 0,
-    // right: 0, 
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 20,
