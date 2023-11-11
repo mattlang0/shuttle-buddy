@@ -146,7 +146,7 @@ export default function AddEditEntity(props: AddEditEntityProps) {
 
           {/* Share button */}
           <Pressable>
-            <FontAwesome style={[styles.pressableIcon, {opacity: 0}]} name='long-arrow-up' />
+            <FontAwesome style={styles.pressableIcon} name='qrcode' />
           </Pressable>
         </View>
         
@@ -241,11 +241,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     backgroundColor: undefined,
-  },
-  buttonClose: {
-    borderRadius: 20,
-    padding: 10,
-    backgroundColor: '#2196F3',
   },
   title: {
     margin: 10,
