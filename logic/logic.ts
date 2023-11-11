@@ -268,6 +268,7 @@ export const isScenarioValid = (
       return false;
     }
   
+    //Make sure there is a vehicle with enough space to take two people back to put in
     let vehiclesWithMoreThanOneSpace = false;
     for (let i = 0; i < vehicles.length; i++) {
       if (vehicles[i].maxSpace > 1) {
@@ -276,6 +277,13 @@ export const isScenarioValid = (
       }
     }
     if (!vehiclesWithMoreThanOneSpace) {
+      return false;
+    }
+
+    //Make sure there is enough vehicle space for the people
+    const spaceAvailable = vehicles.reduce((value: number, currentValue: VehicleType) => value + currentValue.maxSpace, 0)
+    const spaceRequired = people.length;
+    if ( spaceRequired > spaceAvailable) {
       return false;
     }
   
