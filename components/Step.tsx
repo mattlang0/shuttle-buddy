@@ -20,11 +20,11 @@ export const Step = ({step}: StepProps) => {
     return (
         <View style={styles.container}>
 
-            {/* Put In Group */}
-            <Group group={putInGroup} allPeople={allPeople} />
-
-            {/* Take Out Group */}
-            <Group group={takeOutGroup} allPeople={allPeople} />
+            <FlatList 
+                data={step}
+                renderItem={({item}) => <Group group={item} allPeople={allPeople} />}
+                keyExtractor={item => item.Location}>
+            </FlatList>
             
         </View>
     );
@@ -47,8 +47,11 @@ const Group = ({group, allPeople}: GroupProps) => {
             {/* Put in / Take out Title */}
             <View style={styles.locationTitle}>
                 <Text style={styles.locationIcon}>{icon}</Text>
-                <Text style={styles.locationText}>{title}</Text>
+                <Text style={[styles.locationText, {
+                    }]}>{title}</Text>
             </View>
+
+            <View style={styles.horizontalLine}></View>
 
             <View style={styles.group}>
 
@@ -88,16 +91,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     locationTitle: {
-        paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
     },
     locationIcon: {
-        fontSize: 20,
+        fontSize: 25,
     },
     locationText: {
         fontWeight: '400',
-        fontSize: 20,
+        fontSize: 22,
         color: 'white',
+    },
+    horizontalLine: {
+        backgroundColor: 'grey',
+        width: '50%',
+        height: 1,
     },
 });
