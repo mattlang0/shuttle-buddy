@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Text, Pressable, StyleSheet, ImageBackground } from 'react-native';
+import { Text, Pressable, StyleSheet, ImageBackground, Modal } from 'react-native';
 import { View } from '../components/Themed';
 import { PersonType, VehicleType, ShuttleType, StepType } from '../logic/Types';
 import { calculateMeetAtPutIn } from '../logic/logic';
 import { Step } from '../components/Step';
+import QRCodeModal from './QRCodeModal';
 
 type ShuttleProps = {
   people: PersonType[],
@@ -14,9 +15,10 @@ type ShuttleProps = {
 };
 
 export default function Shuttle(props: ShuttleProps) {
-  const { people, vehicles, onClose } = props;
+  const { people, vehicles, shuttleType, onClose} = props;
   const steps: StepType[] = calculateMeetAtPutIn(people, vehicles);
   const [activeStep, setActiveStep] = useState(0);
+  const [qrCodeVisible, setQRCodeVisible] = useState(false);
 
   const nextStep = () => {
     setActiveStep(currentstep=>currentstep === steps.length - 1 ? currentstep : currentstep + 1);
@@ -34,7 +36,9 @@ export default function Shuttle(props: ShuttleProps) {
     return activeStep === steps.length - 1
   }
 
-  const onShare = () => {};
+  const onShare = () => {
+    setQRCodeVisible(true);
+  };
 
 
   return (
@@ -84,6 +88,18 @@ export default function Shuttle(props: ShuttleProps) {
               </View>
           </Pressable>
         </View>
+
+        {/* QR Code Modal */}
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={qrCodeVisible}
+            onRequestClose={() => {
+              setQRCodeVisible(!setQRCodeVisible);
+            }}>
+            <QRCodeModal onClose={() => {setQRCodeVisible(false)}} people={people} vehicles={vehicles} shuttleType={shuttleType}/>
+        </Modal>
+
       </ImageBackground>
 
     </View>
