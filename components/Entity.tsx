@@ -65,6 +65,7 @@ export const Entity = (props: EntityProps) => {
         paddingLeft: 15,
         paddingRight: 10,
         paddingBottom: 10,
+        gap: 10,
     },
     icon: {
       fontSize: 30,
