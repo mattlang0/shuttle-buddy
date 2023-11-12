@@ -4,7 +4,8 @@ import { Text, Pressable, StyleSheet, ImageBackground, Modal } from 'react-nativ
 import { View } from '../components/Themed';
 import { PersonType, VehicleType, ShuttleType, StepType } from '../logic/Types';
 import { calculateMeetAtPutIn } from '../logic/logic';
-import { Step } from '../components/Step';
+import SwipableTabs from './SwipableTabs';
+import { NavDots } from '../components/NavDots';
 import QRCodeModal from './QRCodeModal';
 
 type ShuttleProps = {
@@ -69,25 +70,10 @@ export default function Shuttle(props: ShuttleProps) {
         </View>
 
         {/* Step */}
-        <Step step={steps[activeStep]} />
-          
-        {/* Bottom Buttons Container */}
-        <View style={styles.bottomButtonsContainer}>
-          <Pressable
-            onPress={previousStep}>
-              <View style={styles.nextPreviousButton}>
-                <FontAwesome style={isBackButtonDisabled() ? styles.pressableIconLeftRightDisabled : styles.pressableIconLeftRight} name='chevron-left' />
-                <Text style={isBackButtonDisabled() ? styles.nextPreviousTextDisabled : styles.nextPreviousText}>Back</Text>
-              </View>
-          </Pressable>
-          <Pressable
-            onPress={nextStep}>
-              <View style={styles.nextPreviousButton}>
-                <Text style={isNextButtonDisabled() ? styles.nextPreviousTextDisabled : styles.nextPreviousText }>Next</Text>
-                <FontAwesome style={isNextButtonDisabled() ? styles.pressableIconLeftRightDisabled : styles.pressableIconLeftRight} name='chevron-right' />
-              </View>
-          </Pressable>
-        </View>
+        <SwipableTabs steps={steps} index={activeStep} setIndex={setActiveStep}/>
+
+        {/* Bottom Nav Dots */}
+        <NavDots index={activeStep} count={steps.length} />
 
         {/* QR Code Modal */}
         <Modal
@@ -134,14 +120,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
   },
-  bottomButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 40,
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: undefined,
-  },
   pressableIcon: {
     fontSize: 28,
     marginHorizontal: 15,
@@ -150,33 +128,5 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: 'center',
-  },
-  nextPreviousButton: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    alignContent: 'flex-end',
-    backgroundColor: 'rgba(52, 52, 52, 0.9)',
-    padding: 5,
-    borderRadius: 20,
-  },
-  nextPreviousText: {
-    fontSize: 20,
-    paddingHorizontal: 10,
-    color: 'white',
-  },
-  nextPreviousTextDisabled: {
-    fontSize: 20,
-    paddingHorizontal: 10,
-    color: 'grey',
-  },
-  pressableIconLeftRight: {
-    fontSize: 20,
-    marginHorizontal: 5,
-    color: 'white',
-  },
-  pressableIconLeftRightDisabled: {
-    fontSize: 20,
-    marginHorizontal: 5,
-    color: 'grey',
   },
 });
