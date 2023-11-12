@@ -20,22 +20,6 @@ export default function Shuttle(props: ShuttleProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [qrCodeVisible, setQRCodeVisible] = useState(false);
 
-  const nextStep = () => {
-    setActiveStep(currentstep=>currentstep === steps.length - 1 ? currentstep : currentstep + 1);
-  };
-
-  const previousStep = () => {
-    setActiveStep(currentstep=>currentstep === 0 ? currentstep : currentstep - 1);
-  };
-
-  const isBackButtonDisabled = () => {
-    return activeStep === 0;
-  }
-
-  const isNextButtonDisabled = () => {
-    return activeStep === steps.length - 1
-  }
-
   const onShare = () => {
     setQRCodeVisible(true);
   };
