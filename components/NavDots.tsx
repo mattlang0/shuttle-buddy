@@ -12,7 +12,7 @@ export const NavDots = (props: NavDotsProps) => {
 
     return (
         <View style={styles.container}>
-            {Array.from(Array(count)).map((x, i) => <FontAwesome key={i} style={i === index ? styles.selected : styles.unselected} name='circle' />)}
+            {Array.from(Array(count)).map((x, i) => <FontAwesome key={i} style={i === index ? styles.selected : styles.unselected} name={i === index ? 'circle' : 'circle-o'} />)}
         </View>
     );
 }

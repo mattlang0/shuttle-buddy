@@ -37,7 +37,7 @@ export default function Main() {
         </Text>
         <Switch
             trackColor={{false: '#E7EBEE', true: '#E7EBEE'}}
-            thumbColor={shuttleType === ShuttleType.MEET_AT_PUT_IN ? 'green' : 'orange'}
+            thumbColor={shuttleType === ShuttleType.MEET_AT_PUT_IN ? '#1B9321' : '#FF6E25'}
             ios_backgroundColor="#E7EBEE"
             onValueChange={toggleSwitch}
             value={shuttleType === ShuttleType.MEET_AT_TAKE_OUT}
@@ -122,12 +122,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   inputAddPersonText: {
-    color: 'green',
+    color: '#1B9321',
     textAlign: 'center',
     fontSize: 14,
   },
   inputAddPersonButton: {
-    color: 'green',
+    color: '#1B9321',
     fontSize: 28,
   },
   row: {

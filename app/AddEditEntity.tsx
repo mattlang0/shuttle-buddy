@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingBottom: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#F5F5F5',
     borderColor: 'grey',
     borderWidth: 1,
     gap: 15,
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   buttonSave: {
     borderRadius: 20,
     padding: 10,
-    backgroundColor: 'green',
+    backgroundColor: '#1B9321',
   },
   buttonSaveDisabled: {
     borderRadius: 20,
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
   buttonDelete: {
     borderRadius: 20,
     padding: 10,
-    backgroundColor: 'red',
+    backgroundColor: '#BE1E1E',
   },
   buttonDeleteDisabled: {
     borderColor: 'grey',
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
   },
   iconPlusMinus: {
     fontSize: 28,
-    color: 'green',
+    color: '#1B9321',
   },
   pressableIconDisabled: {
     fontSize: 28,
