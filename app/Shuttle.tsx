@@ -47,7 +47,7 @@ export default function Shuttle(props: ShuttleProps) {
           {/* Share button */}
           <Pressable
             onPress={onShare}>
-            <FontAwesome style={styles.pressableIcon} name='long-arrow-up' />
+            <FontAwesome style={styles.pressableIcon} name='qrcode' />
           </Pressable>
 
         </View>
