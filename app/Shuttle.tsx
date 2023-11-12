@@ -94,10 +94,12 @@ const styles = StyleSheet.create({
     backgroundColor: undefined,
   },
   titleShuttleBuddy: {
+    margin: 10,
     fontSize: 25,
     fontWeight: '100',
   },
   titleStepNumber: {
+    marginLeft: -5,
     margin: 10,
     fontSize: 25,
     fontWeight: '600',
