@@ -147,14 +147,11 @@ const styles = StyleSheet.create({
     backgroundColor: undefined
   },
   buttonShuttle: {
-    borderColor: '#CF5C36',
-    borderStyle: 'solid',
-    borderWidth: 2,
     borderRadius: 20,
     padding: 10,
     elevation: 2,
     color: 'grey',
-    backgroundColor: '#CF5C36',
+    backgroundColor: '#FF6E25',
     margin: 10,
   },
   buttonShuttleDisabled: {
@@ -164,7 +161,7 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     color: 'grey',
-    backgroundColor: 'white',
+    backgroundColor: undefined,
     margin: 10,
   },
   buttonShuttleText: {

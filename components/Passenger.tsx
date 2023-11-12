@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   },
   personIcon: {
     fontSize: 20,
+    lineHeight: 22,
     marginHorizontal: 5,
     color: 'white',
   },

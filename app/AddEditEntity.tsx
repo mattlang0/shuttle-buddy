@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     color: 'grey',
-    backgroundColor: 'white',
+    backgroundColor: '#F5F5F5',
   },
   buttonDeleteText: {
     color: 'white',
