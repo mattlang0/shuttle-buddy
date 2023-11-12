@@ -3,6 +3,7 @@ import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -49,9 +50,34 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen
           name="index"
-          options={{ title: 'Shuttle Buddy' }}
+          
+          options={{ 
+            headerStyle: { backgroundColor: '#FF6E25'},
+            header: () => (
+              <View style={styles.container}>
+                  <Image
+                    style={styles.logo}
+                    source={require('../assets/images/header.png')}
+                  />
+              </View>
+            ),
+          }}
         />
       </Stack>
     </ThemeProvider>
   );
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 40,
+    backgroundColor: '#FF6E25',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logo: {
+    height: 60,
+    width: 200,
+  },
+});
