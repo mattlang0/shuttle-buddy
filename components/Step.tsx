@@ -39,14 +39,12 @@ const Group = ({group, allPeople}: GroupProps) => {
     const vehicles = group.Vehicles;
     const peopleNotInVehicles = group.People.filter((p)=>!p.vehicleId);
     const title = group.Location === Location.PUT_IN ? "Put in" : "Take out";
-    const icon = group.Location === Location.PUT_IN ? "📍" : "🏁";
 
     return (
         <View style={styles.groupContainer}>
 
             {/* Put in / Take out Title */}
             <View style={styles.locationTitle}>
-                <Text style={styles.locationIcon}>{icon}</Text>
                 <Text style={[styles.locationText, {
                     }]}>{title}</Text>
             </View>
@@ -93,9 +91,6 @@ const styles = StyleSheet.create({
     locationTitle: {
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    locationIcon: {
-        fontSize: 25,
     },
     locationText: {
         fontWeight: '400',
