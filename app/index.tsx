@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { StyleSheet, Pressable, Modal, Image, Switch } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { StyleSheet, Pressable, Modal, Image, Switch, Text, View } from 'react-native';
 import AddEditEntity from './AddEditEntity';
 import Shuttle from './Shuttle';
 import { PersonType, VehicleType, ShuttleType } from "../logic/Types";

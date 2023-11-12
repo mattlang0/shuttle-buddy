@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Text, Pressable, StyleSheet, ImageBackground, Modal } from 'react-native';
-import { View } from '../components/Themed';
+import { Text, Pressable, StyleSheet, ImageBackground, Modal, View } from 'react-native';
 import { PersonType, VehicleType, ShuttleType, StepType } from '../logic/Types';
 import { calculateMeetAtPutIn } from '../logic/logic';
 import SwipableTabs from './SwipableTabs';

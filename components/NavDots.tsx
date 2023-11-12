@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { View } from './Themed';
 
 type NavDotsProps =  {
     index: number;

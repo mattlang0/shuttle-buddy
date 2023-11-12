@@ -1,8 +1,7 @@
 import React, { SetStateAction, Dispatch } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, Pressable, StyleSheet, TextInput, KeyboardAvoidingView, Modal } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { Platform, Pressable, StyleSheet, TextInput, KeyboardAvoidingView, Modal, Text, View } from 'react-native';
 import { PersonType, VehicleType, EntityType, ScenarioType, ShuttleType } from '../logic/Types';
 import QRCodeScanner from './QRCodeScanner';
 
