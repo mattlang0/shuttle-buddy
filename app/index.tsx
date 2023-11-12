@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { StyleSheet, Pressable, Modal, Image, Switch, Text, View } from 'react-native';
+import { StyleSheet, Pressable, Modal, Switch, Text, View } from 'react-native';
 import AddEditEntity from './AddEditEntity';
 import Shuttle from './Shuttle';
 import { PersonType, VehicleType, ShuttleType } from "../logic/Types";
@@ -67,10 +67,6 @@ export default function Main() {
           <Text style={styles.noPeopleText}>
             Click 'Add Person' to begin
           </Text>
-          <Image
-            style={styles.noPeopleImage}
-            source={require('../assets/images/2.png')}
-          />
         </View>}
       
       {/* Shuttle Button */}
@@ -189,11 +185,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   noPeopleText: {
-    fontWeight: "500",
-    marginBottom: -30,
+    fontWeight: "600",
+    color: 'grey',
+    marginBottom: 30,
   },
-  noPeopleImage: {
-    width: 200,
-    height: 200,
-  }
 });
