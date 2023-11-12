@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     color: 'grey',
-    backgroundColor: undefined,
+    backgroundColor: '#F5F5F5',
     margin: 10,
   },
   buttonShuttleText: {
