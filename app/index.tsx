@@ -36,9 +36,9 @@ export default function Main() {
           {shuttleType === ShuttleType.MEET_AT_PUT_IN ? 'Meet at Put In': 'Meet at Take Out'}
         </Text>
         <Switch
-            trackColor={{false: '#E7EBEE', true: '#E7EBEE'}}
-            thumbColor={shuttleType === ShuttleType.MEET_AT_PUT_IN ? '#1B9321' : '#FF6E25'}
-            ios_backgroundColor="#E7EBEE"
+            trackColor={{false: '#1B9321', true: '#FF6E25'}}
+            thumbColor={shuttleType === ShuttleType.MEET_AT_PUT_IN ? '#FFFFFF' : '#FFFFFF'}
+            ios_backgroundColor="#1B9321"
             onValueChange={toggleSwitch}
             value={shuttleType === ShuttleType.MEET_AT_TAKE_OUT}
           />
