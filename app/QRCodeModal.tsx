@@ -32,12 +32,12 @@ export default function QRCodeModal(props: QRCodeModalProps) {
                     <FontAwesome style={styles.pressableIcon} name='angle-left' />
                 </Pressable>
 
-                <Text style={styles.textTitle}>Share with the group!</Text>
+                <Text style={styles.textTitle}>Share with the group</Text>
 
                 <FontAwesome style={styles.hiddenButton} name='angle-right' />
               </View>
                 
-              <Text style={styles.textDescription}>Have your friends scan this in the Shuttle Buddy App to view this same shuttle!</Text>
+              <Text style={styles.textDescription}>Have your friends scan this in the Shuttle Buddy App to load this shuttle!</Text>
 
               <QRCode 
                 size={200}
