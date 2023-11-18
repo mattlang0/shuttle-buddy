@@ -16,13 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mlang1.shuttlebuddy"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/header.png",
         "backgroundColor": "#FF6E25"
-      }
+      },
+      "package": "com.mlang1.shuttlebuddy"
     },
     "web": {
       "bundler": "metro",
@@ -34,6 +36,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "bc717e4a-61b0-4cd2-9c38-27952e456281"
+      }
     }
   }
 }
