@@ -4,7 +4,7 @@
     "slug": "shuttle-buddy",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/header.png",
+    "icon": "./assets/images/squareIcon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/header.png",
+        "foregroundImage": "./assets/images/squareIconTransparent.png",
         "backgroundColor": "#FF6E25"
       },
       "package": "com.mlang1.shuttlebuddy"
