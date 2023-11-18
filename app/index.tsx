@@ -22,9 +22,9 @@ export default function Main() {
 
   const toggleSwitch = () => setShuttleType((previousState) => {
     if (previousState === ShuttleType.MEET_AT_PUT_IN) {
-      return ShuttleType.MEET_AT_TAKE_OUT
+      return ShuttleType.MEET_AT_TAKE_OUT;
     }
-    return ShuttleType.MEET_AT_PUT_IN
+    return ShuttleType.MEET_AT_PUT_IN;
   });
 
   return (
@@ -37,7 +37,7 @@ export default function Main() {
         </Text>
         <Switch
             trackColor={{false: '#1B9321', true: '#FF6E25'}}
-            thumbColor={shuttleType === ShuttleType.MEET_AT_PUT_IN ? '#FFFFFF' : '#FFFFFF'}
+            thumbColor={'#FFFFFF'}
             ios_backgroundColor="#1B9321"
             onValueChange={toggleSwitch}
             value={shuttleType === ShuttleType.MEET_AT_TAKE_OUT}
