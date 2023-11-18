@@ -3,7 +3,7 @@ import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { Image, StyleSheet, View, SafeAreaView } from 'react-native';
+import { Image, StyleSheet, SafeAreaView, StatusBar, Platform} from 'react-native';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -54,14 +54,12 @@ function RootLayoutNav() {
           options={{ 
             headerStyle: { backgroundColor: '#FF6E25'},
             header: () => (
-              <View style={styles.container}>
-                <SafeAreaView>
-                  <Image
-                      style={styles.logo}
-                      source={require('../assets/images/header.png')}
-                    />
-                </SafeAreaView>
-              </View>
+              <SafeAreaView style={styles.SafeAreaView}>
+                <Image
+                    style={styles.logo}
+                    source={require('../assets/images/header.png')}
+                  />
+              </SafeAreaView>
             ),
           }}
         />
@@ -72,10 +70,11 @@ function RootLayoutNav() {
 
 
 const styles = StyleSheet.create({
-  container: {
+  SafeAreaView: {
     backgroundColor: '#FF6E25',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   logo: {
     height: 60,
