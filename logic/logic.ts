@@ -103,7 +103,9 @@ const getMaxVehiclesToTakeOut = (previousStep: StepType): StepType => {
   //PUT IN VEHICLES
   const driversVehicles = putInVehicles.filter((v) => v.personId !== undefined);
   const driversVehiclesIds = driversVehicles.map((v) => v.personId);
-  putInVehicles = putInVehicles.filter((v) => driversVehiclesIds.includes(v.personId));
+  putInVehicles = putInVehicles.filter((v) => {
+    driversVehiclesIds.includes(v.personId);
+  });
 
   //TAKE OUT VEHICLES
   let drivers = putInPeople.filter((p) => driversVehiclesIds.includes(p.id));
