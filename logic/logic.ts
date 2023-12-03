@@ -262,32 +262,37 @@ export const isScenarioValid = (
     vehicles: VehicleType[],
     shuttleType: ShuttleType
   ) => {
-    const minCars: number = 2;
+    if (shuttleType === ShuttleType.MEET_AT_PUT_IN) {
+      const minCars: number = 2;
   
-    if (vehicles.length < minCars) {
-      return false;
-    }
-  
-    //Make sure there is a vehicle with enough space to take two people back to put in
-    let vehiclesWithMoreThanOneSpace = false;
-    for (let i = 0; i < vehicles.length; i++) {
-      if (vehicles[i].maxSpace > 1) {
-        vehiclesWithMoreThanOneSpace = true;
-        break;
+      if (vehicles.length < minCars) {
+        return false;
       }
-    }
-    if (!vehiclesWithMoreThanOneSpace) {
-      return false;
-    }
+    
+      //Make sure there is a vehicle with enough space to take two people back to put in
+      let vehiclesWithMoreThanOneSpace = false;
+      for (let i = 0; i < vehicles.length; i++) {
+        if (vehicles[i].maxSpace > 1) {
+          vehiclesWithMoreThanOneSpace = true;
+          break;
+        }
+      }
+      if (!vehiclesWithMoreThanOneSpace) {
+        return false;
+      }
 
-    //Make sure there is enough vehicle space for the people
-    const spaceAvailable = vehicles.reduce((value: number, currentValue: VehicleType) => value + currentValue.maxSpace, 0)
-    const spaceRequired = people.length;
-    if ( spaceRequired > spaceAvailable) {
-      return false;
+      //Make sure there is enough vehicle space for the people
+      const spaceAvailable = vehicles.reduce((value: number, currentValue: VehicleType) => value + currentValue.maxSpace, 0)
+      const spaceRequired = people.length;
+      if ( spaceRequired > spaceAvailable) {
+        return false;
+      }
+    
+      return true;
+    } else {
+      // TODO: FILL IN THIS LOGIC
+      return true;
     }
-  
-    return true;
   };
 
 const compareStringArrays = (array1: string[], array2: string[]) => {
@@ -301,3 +306,69 @@ const compareStringArrays = (array1: string[], array2: string[]) => {
   }
   return true;
 };
+
+const getAllPeopleAllVehiclesToTakeOut = (
+  people: PersonType[],
+  vehicles: VehicleType[]): StepType => {
+    let putInPeople: PersonType[] = [];
+    let putInVehicles: VehicleType[] = [];
+    let takeOutPeople: PersonType[] = JSON.parse(JSON.stringify(people));
+    let takeOutVehicles: VehicleType[] = JSON.parse(JSON.stringify(vehicles));
+  
+    //TAKE OUT VEHICLES
+    //TODO do we need all vehicles?
+    //** Sort vehicles by max space **
+    takeOutVehicles.sort((a, b) => b.maxSpace - a.maxSpace);
+
+    //TAKE OUT PEOPLE
+    //Distribute people across vehicles
+    //List people without cars
+    const peopleWithoutCars = takeOutPeople.filter(
+      (person: PersonType) => person.vehicleId === undefined
+    );
+    //Loop through each person without a car and assign them to a car with space
+    for (var idxPerson = 0; idxPerson < peopleWithoutCars.length; idxPerson++) {
+      var person = peopleWithoutCars[idxPerson];
+
+      //Find first vehicle with space
+      for (
+        var idxLastVehicle = 0;
+        idxLastVehicle < takeOutVehicles.length;
+        idxLastVehicle++
+      ) {
+        const vehicle = takeOutVehicles[idxLastVehicle];
+        const peopleInVehicle = takeOutPeople.filter(
+          (person: PersonType) => person.vehicleId === vehicle.personId
+        );
+        const currentSpace = vehicle.maxSpace - peopleInVehicle.length;
+
+        if (currentSpace > 0) {
+          person.vehicleId = vehicle.personId;
+          break;
+        }
+      }
+    }
+
+    return [
+      {
+        Location: Location.PUT_IN,
+        People: putInPeople,
+        Vehicles: putInVehicles,
+      },
+      {
+        Location: Location.TAKE_OUT,
+        People: takeOutPeople,
+        Vehicles: takeOutVehicles,
+      },
+    ]; 
+};
+
+export const calculateMeetAtTakeOut = (
+  people: PersonType[],
+  vehicles: VehicleType[]): StepType[] => {
+    let Steps: StepType[] = [];
+
+    Steps.push(getAllPeopleAllVehiclesToTakeOut(people, vehicles));
+
+    return Steps;
+  };

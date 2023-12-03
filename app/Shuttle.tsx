@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Text, Pressable, StyleSheet, ImageBackground, Modal, View } from 'react-native';
 import { PersonType, VehicleType, ShuttleType, StepType } from '../logic/Types';
-import { calculateMeetAtPutIn } from '../logic/logic';
+import { calculateMeetAtPutIn, calculateMeetAtTakeOut } from '../logic/logic';
 import SwipableTabs from './SwipableTabs';
 import { NavDots } from '../components/NavDots';
 import QRCodeModal from './QRCodeModal';
@@ -16,7 +16,7 @@ type ShuttleProps = {
 
 export default function Shuttle(props: ShuttleProps) {
   const { people, vehicles, shuttleType, onClose} = props;
-  const steps: StepType[] = calculateMeetAtPutIn(people, vehicles);
+  const steps: StepType[] = shuttleType === ShuttleType.MEET_AT_PUT_IN ? calculateMeetAtPutIn(people, vehicles) : calculateMeetAtTakeOut(people, vehicles);
   const [activeStep, setActiveStep] = useState(0);
   const [qrCodeVisible, setQRCodeVisible] = useState(false);
 
