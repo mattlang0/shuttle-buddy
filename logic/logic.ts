@@ -348,6 +348,7 @@ const getAllPeopleAllVehiclesToTakeOut = (
         }
       }
     }
+    //TODO distribute people across vehicles so no one is lonely
 
     return [
       {
@@ -363,12 +364,98 @@ const getAllPeopleAllVehiclesToTakeOut = (
     ]; 
 };
 
+const getMinVehiclesToPutIn = (previousStep: StepType): StepType => {
+  //There are currently no people/vehicles at the put in, so we only look at the take out
+  let peopleInput: PersonType[] = JSON.parse(
+    JSON.stringify(previousStep[1].People)
+  );
+  let vehiclesInput: VehicleType[] = JSON.parse(
+    JSON.stringify(previousStep[1].Vehicles)
+  );
+  let putInPeople: PersonType[] = [];
+  let putInVehicles: VehicleType[] = [];
+  let takeOutPeople: PersonType[] = [];
+  let takeOutVehicles: VehicleType[] = [];
+
+  //Find Take out vehicles
+  let takeOutVehicleIds:string[] = [];
+  const vehicleCount = vehiclesInput.length;
+  let space = 0;
+  for (let i = vehiclesInput.length - 1; i >= 0; i--) {
+    if (space >= vehicleCount) {
+      break;
+    }
+    space += vehiclesInput[i].maxSpace;
+    takeOutVehicleIds.push(vehiclesInput[i].personId);
+  }
+  takeOutVehicles = vehiclesInput.filter((v)=>takeOutVehicleIds.includes(v.personId));
+  putInVehicles = vehiclesInput.filter((v)=>!takeOutVehicleIds.includes(v.personId));
+  
+  //Find vehicles going to put in with space available
+  // let putInVehiclesWithSpace: VehicleType[] = [];
+  // for (let i = 0; i < putInVehicles.length;  i++) {
+  //   const vehicle = putInVehicles[i];
+  //   const vehicleMaxSpace = vehicle.maxSpace;
+  //   const peopleInVehicle = peopleInput.filter(person=>person.vehicleId === vehicle.personId).length;
+  //   if (peopleInVehicle < vehicleMaxSpace) {
+  //     putInVehiclesWithSpace.push(putInVehicles[i]);
+  //   }
+  // }
+  //console.log(putInVehiclesWithSpace);
+
+  //Find people not in a vehicle going to put in
+  // takeOutVehicleIds = takeOutVehicles.map(vehicle=>vehicle.personId);
+  // let peopleNeedingToMove: PersonType[] = peopleInput.filter((person)=>{
+  //   return person.vehicleId && takeOutVehicleIds.includes(person.vehicleId);
+  // });
+  //console.log(peopleNeedingToMove);
+
+  //Move people to vehicles going to put in with space available
+  // for (let i = 0; i < putInVehiclesWithSpace.length; i++) {
+  //   let vehicle = putInVehiclesWithSpace[i];
+  //   const vehicleMaxSpace = vehicle.maxSpace;
+  //   const peopleInVehicle = peopleInput.filter(person=>person.vehicleId === vehicle.personId).length;
+  //   const spaceAvailable = vehicleMaxSpace - peopleInVehicle;
+  //   for (let i = 0; i < spaceAvailable; i++) {
+  //   }
+  // }
+
+  putInPeople = peopleInput.filter((person)=>{
+    const putInVehicleIds = putInVehicles.map(vehicle=>vehicle.personId);
+    return person.vehicleId && putInVehicleIds.includes(person.vehicleId);
+  });
+
+  takeOutPeople = peopleInput.filter((person)=>{
+    const takeOutVehicleIds = takeOutVehicles.map(vehicle=>vehicle.personId);
+    return person.vehicleId && takeOutVehicleIds.includes(person.vehicleId);
+  });
+
+
+  return [
+  {
+    Location: Location.PUT_IN,
+    People: putInPeople,
+    Vehicles: putInVehicles,
+  },
+  {
+    Location: Location.TAKE_OUT,
+    People: takeOutPeople,
+    Vehicles: takeOutVehicles,
+  },
+]; 
+};
+
 export const calculateMeetAtTakeOut = (
   people: PersonType[],
   vehicles: VehicleType[]): StepType[] => {
     let Steps: StepType[] = [];
 
     Steps.push(getAllPeopleAllVehiclesToTakeOut(people, vehicles));
+
+    Steps.push(getMinVehiclesToPutIn(Steps[Steps.length - 1]));
+
+    //loop: if there are still people at the take out
+    //move them to the put in
 
     return Steps;
   };
