@@ -327,7 +327,7 @@ const getAllPeopleAllVehiclesToTakeOut = (
       (person: PersonType) => person.vehicleId === undefined
     );
 
-    //This variable allows the distribution of people actoss all vehicles so that no one is lonely
+    //This variable allows the distribution of people across all vehicles so that no one is lonely
     let indexVehicle = 0;
     //Loop through each person without a car and assign them to a car with space
     for (var idxPerson = 0; idxPerson < peopleWithoutCars.length; idxPerson++) {
@@ -395,33 +395,56 @@ const getMinVehiclesToPutIn = (previousStep: StepType): StepType => {
   putInVehicles = vehiclesInput.filter((v)=>!takeOutVehicleIds.includes(v.personId));
   
   //Find vehicles going to put in with space available
-  // let putInVehiclesWithSpace: VehicleType[] = [];
-  // for (let i = 0; i < putInVehicles.length;  i++) {
-  //   const vehicle = putInVehicles[i];
-  //   const vehicleMaxSpace = vehicle.maxSpace;
-  //   const peopleInVehicle = peopleInput.filter(person=>person.vehicleId === vehicle.personId).length;
-  //   if (peopleInVehicle < vehicleMaxSpace) {
-  //     putInVehiclesWithSpace.push(putInVehicles[i]);
-  //   }
-  // }
-  //console.log(putInVehiclesWithSpace);
+  let putInVehiclesWithSpace: VehicleType[] = [];
+  for (let i = 0; i < putInVehicles.length;  i++) {
+    const vehicle = putInVehicles[i];
+    const vehicleMaxSpace = vehicle.maxSpace;
+    const peopleInVehicle = peopleInput.filter(person=>person.vehicleId === vehicle.personId).length;
+    if (peopleInVehicle < vehicleMaxSpace) {
+      putInVehiclesWithSpace.push(putInVehicles[i]);
+    }
+  }
 
   //Find people not in a vehicle going to put in
-  // takeOutVehicleIds = takeOutVehicles.map(vehicle=>vehicle.personId);
-  // let peopleNeedingToMove: PersonType[] = peopleInput.filter((person)=>{
-  //   return person.vehicleId && takeOutVehicleIds.includes(person.vehicleId);
-  // });
-  //console.log(peopleNeedingToMove);
+  takeOutVehicleIds = takeOutVehicles.map(vehicle=>vehicle.personId);
+  let peopleNeedingToMove: PersonType[] = peopleInput.filter((person)=>{
+    return person.vehicleId && takeOutVehicleIds.includes(person.vehicleId);
+  });
 
   //Move people to vehicles going to put in with space available
-  // for (let i = 0; i < putInVehiclesWithSpace.length; i++) {
-  //   let vehicle = putInVehiclesWithSpace[i];
-  //   const vehicleMaxSpace = vehicle.maxSpace;
-  //   const peopleInVehicle = peopleInput.filter(person=>person.vehicleId === vehicle.personId).length;
-  //   const spaceAvailable = vehicleMaxSpace - peopleInVehicle;
-  //   for (let i = 0; i < spaceAvailable; i++) {
-  //   }
-  // }
+  //Put drivers at the end of the array so that we move drivers last
+  let indexesNeedingToMoveToEndOfArray = [];
+  for (let i = 0; i < peopleNeedingToMove.length; i++) {
+    if (takeOutVehicleIds.includes(peopleNeedingToMove[i].id)) {
+      indexesNeedingToMoveToEndOfArray.push(i)
+    }
+  }
+  indexesNeedingToMoveToEndOfArray.forEach(index => {
+    peopleNeedingToMove.push(peopleNeedingToMove.splice(index, 1)[0]);
+  });
+  //This variable allows the distribution of people across all vehicles so that no one is lonely
+  let indexVehicle = 0;
+  //Loop through each person needing to move and assign them to a car with space
+  for (var idxPerson = 0; idxPerson < peopleNeedingToMove.length; idxPerson++) {
+    var person = peopleNeedingToMove[idxPerson];
+    //Find first vehicle with space
+    for (
+      var i = indexVehicle;
+      i < putInVehiclesWithSpace.length;
+      i++
+    ) {
+      const vehicle = putInVehiclesWithSpace[i];
+      const peopleInVehicle = peopleInput.filter(
+        (person: PersonType) => person.vehicleId === vehicle.personId
+      );
+      const currentSpace = vehicle.maxSpace - peopleInVehicle.length;
+      if (currentSpace > 0) {
+        person.vehicleId = vehicle.personId;
+        indexVehicle = indexVehicle >= putInVehiclesWithSpace.length - 1 ? 0 : indexVehicle + 1; 
+        break;
+      }
+    }
+  }
 
   putInPeople = peopleInput.filter((person)=>{
     const putInVehicleIds = putInVehicles.map(vehicle=>vehicle.personId);
