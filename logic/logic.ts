@@ -326,17 +326,20 @@ const getAllPeopleAllVehiclesToTakeOut = (
     const peopleWithoutCars = takeOutPeople.filter(
       (person: PersonType) => person.vehicleId === undefined
     );
+
+    //This variable allows the distribution of people actoss all vehicles so that no one is lonely
+    let indexVehicle = 0;
     //Loop through each person without a car and assign them to a car with space
     for (var idxPerson = 0; idxPerson < peopleWithoutCars.length; idxPerson++) {
       var person = peopleWithoutCars[idxPerson];
 
       //Find first vehicle with space
       for (
-        var idxLastVehicle = 0;
-        idxLastVehicle < takeOutVehicles.length;
-        idxLastVehicle++
+        var i = indexVehicle;
+        i < takeOutVehicles.length;
+        i++
       ) {
-        const vehicle = takeOutVehicles[idxLastVehicle];
+        const vehicle = takeOutVehicles[i];
         const peopleInVehicle = takeOutPeople.filter(
           (person: PersonType) => person.vehicleId === vehicle.personId
         );
@@ -344,11 +347,11 @@ const getAllPeopleAllVehiclesToTakeOut = (
 
         if (currentSpace > 0) {
           person.vehicleId = vehicle.personId;
+          indexVehicle = indexVehicle >= takeOutVehicles.length - 1 ? 0 : indexVehicle + 1; 
           break;
         }
       }
     }
-    //TODO distribute people across vehicles so no one is lonely
 
     return [
       {
