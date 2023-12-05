@@ -471,6 +471,69 @@ const getMinVehiclesToPutIn = (previousStep: StepType): StepType => {
 ]; 
 };
 
+const getSmallestVehicleFromPutInToTakeOut = (previousStep: StepType): StepType => {
+  let putInPeopleInput: PersonType[] = JSON.parse(
+    JSON.stringify(previousStep[0].People)
+  );
+  let putInVehiclesInput: VehicleType[] = JSON.parse(
+    JSON.stringify(previousStep[0].Vehicles)
+  );
+  let takeOutPeopleInput: PersonType[] = JSON.parse(
+    JSON.stringify(previousStep[1].People)
+  );
+  let takeOutVehiclesInput: VehicleType[] = JSON.parse(
+    JSON.stringify(previousStep[1].Vehicles)
+  );
+  let putInPeople: PersonType[] = [];
+  let putInVehicles: VehicleType[] = [];
+  let takeOutPeople: PersonType[] = [];
+  let takeOutVehicles: VehicleType[] = [];
+
+  let peopleNeedingToMove = takeOutPeopleInput;
+  
+  //find smallest vehicle that fits all people
+  // TODO this may need to be multiple cars, instead of just the smallest one
+  let vehicleToUse: VehicleType = putInVehiclesInput[0];
+  let personToUse: PersonType = putInPeopleInput.find(person => person.id === vehicleToUse.personId) || putInPeopleInput[0];
+  putInVehiclesInput.sort((a, b) => a.maxSpace - b.maxSpace);
+  for (let i = 0; i < putInVehiclesInput.length; i++) {
+    if (putInVehiclesInput[i].maxSpace >= peopleNeedingToMove.length) {
+      vehicleToUse = putInVehiclesInput[i];
+      break;
+    }
+  }
+
+  //Move everyone except the driver out of the vehicle
+  putInPeopleInput.forEach(person => {
+    if (person.vehicleId === vehicleToUse?.personId && person.id !== vehicleToUse?.personId) { 
+      delete person.vehicleId;
+    }
+  });
+
+  //Move vehicle from put in to take out
+  putInVehicles = putInVehiclesInput.filter(vehicle => vehicle !== vehicleToUse);
+  takeOutVehicles = takeOutVehiclesInput;
+  takeOutVehicles.push(vehicleToUse);
+  
+  //Move person from put in to take out
+  putInPeople = putInPeopleInput.filter(person => person.id !== vehicleToUse.personId);
+  takeOutPeople = takeOutPeopleInput;
+  takeOutPeople.push(personToUse);
+
+  return [
+    {
+      Location: Location.PUT_IN,
+      People: putInPeople,
+      Vehicles: putInVehicles,
+    },
+    {
+      Location: Location.TAKE_OUT,
+      People: takeOutPeople,
+      Vehicles: takeOutVehicles,
+    },
+  ]; 
+}
+
 export const calculateMeetAtTakeOut = (
   people: PersonType[],
   vehicles: VehicleType[]): StepType[] => {
@@ -480,8 +543,12 @@ export const calculateMeetAtTakeOut = (
 
     Steps.push(getMinVehiclesToPutIn(Steps[Steps.length - 1]));
 
-    //loop: if there are still people at the take out
-    //move them to the put in
+    //while there are still people at the take out, get them to the put in
+    //TODO
+    if (Steps[Steps.length - 1][1].People.length > 0) {
+      Steps.push(getSmallestVehicleFromPutInToTakeOut(Steps[Steps.length - 1]));
+      //TODO Get AllPeopleToPutInOneVehicleToTakeOut
+    }
 
     return Steps;
   };
