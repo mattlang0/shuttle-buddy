@@ -516,7 +516,7 @@ const getSmallestVehicleFromPutInToTakeOut = (previousStep: StepType): StepType 
   takeOutVehicles.push(vehicleToUse);
   
   //Move person from put in to take out
-  putInPeople = putInPeopleInput.filter(person => person.id !== vehicleToUse.personId);
+  putInPeople = putInPeopleInput.filter(person => person.id !== personToUse.id);
   takeOutPeople = takeOutPeopleInput;
   takeOutPeople.push(personToUse);
 
