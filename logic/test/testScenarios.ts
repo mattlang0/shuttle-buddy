@@ -1,5 +1,4 @@
 import { PersonType, VehicleType, EntityType, ScenarioType, ShuttleType } from "../Types";
-import { names } from './names';
 
 const getPeople = (entities: EntityType[]): PersonType[] => {
   return entities.map((entity) => {
@@ -83,8 +82,5 @@ export const zeroPad = (num: number) => {
 };
 
 export const getRandomName = () => {
-    const min = 0;
-    const max = names.length - 1;
-    const index = Math.floor(Math.random() * (max - min + 1) + min);
-    return names[index];
-  };
+  return (Math.random() + 1).toString(36).substring(7);
+};
