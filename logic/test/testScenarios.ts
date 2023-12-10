@@ -33,7 +33,7 @@ const getEntity = (name: string, maxSpace: number | null): EntityType => {
     id: personId,
     name: name,
   };
-  if (maxSpace) {
+  if (maxSpace && maxSpace > 1) {
     vehicle = {
       personId,
       maxSpace,
