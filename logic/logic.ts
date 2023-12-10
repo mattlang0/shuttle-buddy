@@ -290,7 +290,7 @@ export const isScenarioValid = (
     
       return true;
     } else {
-      // TODO: FILL IN THIS LOGIC
+// TODO: FILL IN THIS LOGIC
       return true;
     }
   };
@@ -613,6 +613,14 @@ const getAllPeopleToPutInLeaveVehiclesAtTakeOut = (previousStep: StepType, vehic
       takeOutVehicles.push(vehicle);
     }
   });
+
+  //Sometimes putInPeople were added twice during rapid testing of the same scenario
+  //This function makes the array unique
+  putInPeople = [
+    ...new Map(
+      putInPeople.map((item: PersonType) => [item["name"], item])
+    ).values(),
+  ];
 
   return [
     {
