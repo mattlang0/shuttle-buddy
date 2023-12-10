@@ -532,7 +532,101 @@ const getSmallestVehicleFromPutInToTakeOut = (previousStep: StepType): StepType 
       Vehicles: takeOutVehicles,
     },
   ]; 
-}
+};
+
+const getAllPeopleToPutInLeaveVehiclesAtTakeOut = (previousStep: StepType, vehiclesToStayAtTakeOut: VehicleType[]): StepType => {
+  let putInPeopleInput: PersonType[] = JSON.parse(
+    JSON.stringify(previousStep[0].People)
+  );
+  let putInVehiclesInput: VehicleType[] = JSON.parse(
+    JSON.stringify(previousStep[0].Vehicles)
+  );
+  let takeOutPeopleInput: PersonType[] = JSON.parse(
+    JSON.stringify(previousStep[1].People)
+  );
+  let takeOutVehiclesInput: VehicleType[] = JSON.parse(
+    JSON.stringify(previousStep[1].Vehicles)
+  );
+  let putInPeople: PersonType[] = putInPeopleInput;
+  let putInVehicles: VehicleType[] = putInVehiclesInput;
+  let takeOutPeople: PersonType[] = [];
+  let takeOutVehicles: VehicleType[] = [];
+
+  //Find vehicles to move to put in
+  const takeOutVehiclesInputIds = takeOutVehiclesInput.map(v=>v.personId);
+  const vehiclesToStayAtTakeOutIds = vehiclesToStayAtTakeOut.map(v=>v.personId);
+  const vehiclesGoingToPutInIds = takeOutVehiclesInputIds.filter((vehicleId: string)=>!vehiclesToStayAtTakeOutIds.includes(vehicleId));
+  const vehiclesGoingToPutIn = takeOutVehiclesInput.filter(v=>vehiclesGoingToPutInIds.includes(v.personId));
+
+  //Put as many people as possible to vehicles going to put in
+  //People to move either are not in a vehicle, or are in a vehicle that will stay at take out
+  let peopleNeedingToChangeVehicles = takeOutPeopleInput.filter((person:PersonType) => !person.vehicleId || vehiclesToStayAtTakeOutIds.includes(person.vehicleId));
+
+  //Distribute people to move across vehicles to move
+  //Move people to vehicles going to put in with space available
+  //Put drivers at the end of the array so that we move drivers last
+  let indexesNeedingToMoveToEndOfArray = [];
+  for (let i = 0; i < peopleNeedingToChangeVehicles.length; i++) {
+    if (vehiclesToStayAtTakeOutIds.includes(peopleNeedingToChangeVehicles[i].id)) {
+      indexesNeedingToMoveToEndOfArray.push(i)
+    }
+  }
+  indexesNeedingToMoveToEndOfArray.forEach(index => {
+    peopleNeedingToChangeVehicles.push(peopleNeedingToChangeVehicles.splice(index, 1)[0]);
+  });
+  //This variable allows the distribution of people across all vehicles so that no one is lonely
+  let indexVehicle = 0;
+  //Loop through each person needing to move and assign them to a car with space
+  for (var idxPerson = 0; idxPerson < peopleNeedingToChangeVehicles.length; idxPerson++) {
+    var person = peopleNeedingToChangeVehicles[idxPerson];
+    //Find first vehicle with space
+    for (
+      var i = indexVehicle;
+      i < vehiclesGoingToPutIn.length;
+      i++
+    ) {
+      const vehicle = vehiclesGoingToPutIn[i];
+      const peopleInVehicle = takeOutPeopleInput.filter(
+        (person: PersonType) => person.vehicleId === vehicle.personId
+      );
+      const currentSpace = vehicle.maxSpace - peopleInVehicle.length;
+      if (currentSpace > 0) {
+        person.vehicleId = vehicle.personId;
+        indexVehicle = indexVehicle >= vehiclesGoingToPutIn.length - 1 ? 0 : indexVehicle + 1; 
+        break;
+      }
+    }
+  };
+
+  //People going to put in are in a vehicle going to put in
+  takeOutPeopleInput.forEach((person:PersonType) => {
+    if (person.vehicleId && vehiclesGoingToPutInIds.includes(person.vehicleId)) {
+      putInPeople.push(person);
+    } else {
+      takeOutPeople.push(person);
+    }
+  });
+  takeOutVehiclesInput.forEach((vehicle:VehicleType) => {
+    if (vehiclesGoingToPutInIds.includes(vehicle.personId)) {
+      putInVehicles.push(vehicle);
+    } else {
+      takeOutVehicles.push(vehicle);
+    }
+  });
+
+  return [
+    {
+      Location: Location.PUT_IN,
+      People: putInPeople,
+      Vehicles: putInVehicles,
+    },
+    {
+      Location: Location.TAKE_OUT,
+      People: takeOutPeople,
+      Vehicles: takeOutVehicles,
+    },
+  ]; 
+};
 
 export const calculateMeetAtTakeOut = (
   people: PersonType[],
@@ -543,11 +637,11 @@ export const calculateMeetAtTakeOut = (
 
     Steps.push(getMinVehiclesToPutIn(Steps[Steps.length - 1]));
 
-    //while there are still people at the take out, get them to the put in
-    //TODO
-    if (Steps[Steps.length - 1][1].People.length > 0) {
+    //While there are still people at the take out, get them to the put in
+    while (Steps[Steps.length - 1][1].People.length > 0) {
+      const takeOutVehicles: VehicleType[] = Steps[Steps.length - 1][1].Vehicles;
       Steps.push(getSmallestVehicleFromPutInToTakeOut(Steps[Steps.length - 1]));
-      //TODO Get AllPeopleToPutInOneVehicleToTakeOut
+      Steps.push(getAllPeopleToPutInLeaveVehiclesAtTakeOut(Steps[Steps.length - 1], takeOutVehicles));
     }
 
     return Steps;
