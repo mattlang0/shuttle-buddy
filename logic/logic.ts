@@ -290,7 +290,31 @@ export const isScenarioValid = (
     
       return true;
     } else {
-// TODO: FILL IN THIS LOGIC
+      const minCars: number = 2;
+  
+      if (vehicles.length < minCars) {
+        return false;
+      }
+
+      //Make sure there is a vehicle with enough space to take two people back to put in
+      let vehiclesWithMoreThanOneSpace = false;
+      for (let i = 0; i < vehicles.length; i++) {
+        if (vehicles[i].maxSpace > 1) {
+          vehiclesWithMoreThanOneSpace = true;
+          break;
+        }
+      }
+      if (!vehiclesWithMoreThanOneSpace) {
+        return false;
+      }
+
+      //Make sure there is enough vehicle space for the people
+      const spaceAvailable = vehicles.reduce((value: number, currentValue: VehicleType) => value + currentValue.maxSpace, 0)
+      const spaceRequired = people.length;
+      if ( spaceRequired > spaceAvailable) {
+        return false;
+      }
+
       return true;
     }
   };
