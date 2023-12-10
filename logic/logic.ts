@@ -642,6 +642,25 @@ export const calculateMeetAtTakeOut = (
       const takeOutVehicles: VehicleType[] = Steps[Steps.length - 1][1].Vehicles;
       Steps.push(getSmallestVehicleFromPutInToTakeOut(Steps[Steps.length - 1]));
       Steps.push(getAllPeopleToPutInLeaveVehiclesAtTakeOut(Steps[Steps.length - 1], takeOutVehicles));
+    };
+
+    //Ensure there is enough space at take out to bring people back to their cars at put in
+    let takeOutSpace = 0;
+    const spaceNeeded = Steps[Steps.length - 1][0].Vehicles.length;
+    let finalTakeOutVehicles = Steps[Steps.length - 1][1].Vehicles;
+    for(let i = 0; i < finalTakeOutVehicles.length; i++) {
+      const passengerSpace = finalTakeOutVehicles[i].maxSpace - 1;
+      takeOutSpace += passengerSpace;
+    }
+    if (spaceNeeded > takeOutSpace) {
+      throw new Error("Not enough space at take out");
+    }
+
+    //Ensure all people at the start have made it to the put in
+    let firstTakeOutPeople = Steps[0][1].People.map((p) => p.name);
+    let finalPutInPeople = Steps[Steps.length - 1][0].People.map((p) => p.name);
+    if (!compareStringArrays(firstTakeOutPeople, finalPutInPeople)) {
+      throw new Error("we lost some people");
     }
 
     return Steps;
