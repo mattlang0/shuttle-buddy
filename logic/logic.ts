@@ -494,7 +494,6 @@ const getSmallestVehicleFromPutInToTakeOut = (previousStep: StepType): StepType 
   //find smallest vehicle that fits all people
   // TODO this may need to be multiple cars, instead of just the smallest one
   let vehicleToUse: VehicleType = putInVehiclesInput[0];
-  let personToUse: PersonType = putInPeopleInput.find(person => person.id === vehicleToUse.personId) || putInPeopleInput[0];
   putInVehiclesInput.sort((a, b) => a.maxSpace - b.maxSpace);
   for (let i = 0; i < putInVehiclesInput.length; i++) {
     if (putInVehiclesInput[i].maxSpace >= peopleNeedingToMove.length) {
@@ -502,6 +501,7 @@ const getSmallestVehicleFromPutInToTakeOut = (previousStep: StepType): StepType 
       break;
     }
   }
+  let personToUse: PersonType = putInPeopleInput.find(person => person.id === vehicleToUse.personId) || putInPeopleInput[0];
 
   //Move everyone except the driver out of the vehicle
   putInPeopleInput.forEach(person => {
