@@ -18,7 +18,6 @@ test("all scenarios up to x", async () => {
   for (let number = 0; number < max; number++) {
     let numArray = zeroPad(number).split("").map(Number);
     numArray.reverse();
-    numArray = [0].concat(numArray);
     const scenario = getTestScenario(shuttleType, numArray);
     const { people, vehicles } = scenario;
     if (isScenarioValid(people, vehicles, shuttleType)) {
