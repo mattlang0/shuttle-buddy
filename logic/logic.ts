@@ -338,7 +338,7 @@ const getAllPeopleAllVehiclesToTakeOut = (
     let putInVehicles: VehicleType[] = [];
     let takeOutPeople: PersonType[] = JSON.parse(JSON.stringify(people));
     let takeOutVehicles: VehicleType[] = JSON.parse(JSON.stringify(vehicles));
-  
+
     //TAKE OUT VEHICLES
     //TODO do we need all vehicles?
     //** Sort vehicles by max space **
@@ -368,12 +368,12 @@ const getAllPeopleAllVehiclesToTakeOut = (
           (person: PersonType) => person.vehicleId === vehicle.personId
         );
         const currentSpace = vehicle.maxSpace - peopleInVehicle.length;
-
         if (currentSpace > 0) {
           person.vehicleId = vehicle.personId;
           indexVehicle = indexVehicle >= takeOutVehicles.length - 1 ? 0 : indexVehicle + 1; 
           break;
-        }
+        };
+        i = -1;
       }
     }
 
@@ -466,7 +466,8 @@ const getMinVehiclesToPutIn = (previousStep: StepType): StepType => {
         person.vehicleId = vehicle.personId;
         indexVehicle = indexVehicle >= putInVehiclesWithSpace.length - 1 ? 0 : indexVehicle + 1; 
         break;
-      }
+      };
+      i = -1;
     }
   }
 
@@ -618,7 +619,8 @@ const getAllPeopleToPutInLeaveVehiclesAtTakeOut = (previousStep: StepType, vehic
         person.vehicleId = vehicle.personId;
         indexVehicle = indexVehicle >= vehiclesGoingToPutIn.length - 1 ? 0 : indexVehicle + 1; 
         break;
-      }
+      };
+      i = -1;
     }
   };
 
