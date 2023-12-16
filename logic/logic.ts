@@ -582,7 +582,7 @@ const getAllPeopleToPutInLeaveVehiclesAtTakeOut = (previousStep: StepType, vehic
     peopleNeedingToChangeVehicles.push(peopleNeedingToChangeVehicles.splice(index, 1)[0]);
   });
 
-  distributePeopleToVehicles(peopleNeedingToChangeVehicles, vehiclesGoingToPutIn, putInPeople);
+  distributePeopleToVehicles(peopleNeedingToChangeVehicles, vehiclesGoingToPutIn, takeOutPeopleInput);
 
   //People going to put in are in a vehicle going to put in
   takeOutPeopleInput.forEach((person:PersonType) => {
