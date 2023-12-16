@@ -1,5 +1,33 @@
 import { PersonType, VehicleType, ShuttleType, StepType, Location } from "./Types";
 
+const distributePeopleToVehicles = (people: PersonType[], vehicles: VehicleType[], allPeople: PersonType[]) => {
+  //This variable allows the distribution of people across all vehicles so that no one is lonely
+  let indexVehicle = 0;
+  //Loop through each person without a car and assign them to a car with space
+  for (var idxPerson = 0; idxPerson < people.length; idxPerson++) {
+    var person = people[idxPerson];
+
+    //Find first vehicle with space
+    for (
+      var i = indexVehicle;
+      i < vehicles.length;
+      i++
+    ) {
+      const vehicle = vehicles[i];
+      const peopleInVehicle = allPeople.filter(
+        (person: PersonType) => person.vehicleId === vehicle.personId
+      );
+      const currentSpace = vehicle.maxSpace - peopleInVehicle.length;
+      if (currentSpace > 0) {
+        person.vehicleId = vehicle.personId;
+        indexVehicle = indexVehicle >= vehicles.length - 1 ? 0 : indexVehicle + 1; 
+        break;
+      };
+      i = 0;
+    }
+  }
+};
+
 const getAllPeopleMinVehiclesToPutIn = (
   people: PersonType[],
   vehicles: VehicleType[]
@@ -351,32 +379,8 @@ const getAllPeopleAllVehiclesToTakeOut = (
       (person: PersonType) => person.vehicleId === undefined
     );
 
-    //This variable allows the distribution of people across all vehicles so that no one is lonely
-    let indexVehicle = 0;
-    //Loop through each person without a car and assign them to a car with space
-    for (var idxPerson = 0; idxPerson < peopleWithoutCars.length; idxPerson++) {
-      var person = peopleWithoutCars[idxPerson];
-
-      //Find first vehicle with space
-      for (
-        var i = indexVehicle;
-        i < takeOutVehicles.length;
-        i++
-      ) {
-        const vehicle = takeOutVehicles[i];
-        const peopleInVehicle = takeOutPeople.filter(
-          (person: PersonType) => person.vehicleId === vehicle.personId
-        );
-        const currentSpace = vehicle.maxSpace - peopleInVehicle.length;
-        if (currentSpace > 0) {
-          person.vehicleId = vehicle.personId;
-          indexVehicle = indexVehicle >= takeOutVehicles.length - 1 ? 0 : indexVehicle + 1; 
-          break;
-        };
-        i = -1;
-      }
-    }
-
+    distributePeopleToVehicles(peopleWithoutCars, takeOutVehicles, takeOutPeople);
+    
     return [
       {
         Location: Location.PUT_IN,
@@ -446,30 +450,8 @@ const getMinVehiclesToPutIn = (previousStep: StepType): StepType => {
   indexesNeedingToMoveToEndOfArray.forEach(index => {
     peopleNeedingToMove.push(peopleNeedingToMove.splice(index, 1)[0]);
   });
-  //This variable allows the distribution of people across all vehicles so that no one is lonely
-  let indexVehicle = 0;
-  //Loop through each person needing to move and assign them to a car with space
-  for (var idxPerson = 0; idxPerson < peopleNeedingToMove.length; idxPerson++) {
-    var person = peopleNeedingToMove[idxPerson];
-    //Find first vehicle with space
-    for (
-      var i = indexVehicle;
-      i < putInVehiclesWithSpace.length;
-      i++
-    ) {
-      const vehicle = putInVehiclesWithSpace[i];
-      const peopleInVehicle = peopleInput.filter(
-        (person: PersonType) => person.vehicleId === vehicle.personId
-      );
-      const currentSpace = vehicle.maxSpace - peopleInVehicle.length;
-      if (currentSpace > 0) {
-        person.vehicleId = vehicle.personId;
-        indexVehicle = indexVehicle >= putInVehiclesWithSpace.length - 1 ? 0 : indexVehicle + 1; 
-        break;
-      };
-      i = -1;
-    }
-  }
+
+  distributePeopleToVehicles(peopleNeedingToMove, putInVehiclesWithSpace, peopleInput);
 
   putInPeople = peopleInput.filter((person)=>{
     const putInVehicleIds = putInVehicles.map(vehicle=>vehicle.personId);
@@ -599,30 +581,8 @@ const getAllPeopleToPutInLeaveVehiclesAtTakeOut = (previousStep: StepType, vehic
   indexesNeedingToMoveToEndOfArray.forEach(index => {
     peopleNeedingToChangeVehicles.push(peopleNeedingToChangeVehicles.splice(index, 1)[0]);
   });
-  //This variable allows the distribution of people across all vehicles so that no one is lonely
-  let indexVehicle = 0;
-  //Loop through each person needing to move and assign them to a car with space
-  for (var idxPerson = 0; idxPerson < peopleNeedingToChangeVehicles.length; idxPerson++) {
-    var person = peopleNeedingToChangeVehicles[idxPerson];
-    //Find first vehicle with space
-    for (
-      var i = indexVehicle;
-      i < vehiclesGoingToPutIn.length;
-      i++
-    ) {
-      const vehicle = vehiclesGoingToPutIn[i];
-      const peopleInVehicle = takeOutPeopleInput.filter(
-        (person: PersonType) => person.vehicleId === vehicle.personId
-      );
-      const currentSpace = vehicle.maxSpace - peopleInVehicle.length;
-      if (currentSpace > 0) {
-        person.vehicleId = vehicle.personId;
-        indexVehicle = indexVehicle >= vehiclesGoingToPutIn.length - 1 ? 0 : indexVehicle + 1; 
-        break;
-      };
-      i = -1;
-    }
-  };
+
+  distributePeopleToVehicles(peopleNeedingToChangeVehicles, vehiclesGoingToPutIn, putInPeople);
 
   //People going to put in are in a vehicle going to put in
   takeOutPeopleInput.forEach((person:PersonType) => {
