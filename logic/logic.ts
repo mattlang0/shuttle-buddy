@@ -278,93 +278,6 @@ const getAllPeopleToPutIn = (previousStep: StepType): StepType => {
   ];
 };
 
-export const calculateMeetAtPutIn = (
-  people: PersonType[],
-  vehicles: VehicleType[]
-): StepType[] => {
-  let Steps: StepType[] = [];
-
-  Steps.push(getAllPeopleMinVehiclesToPutIn(people, vehicles));
-
-  Steps.push(getMaxVehiclesToTakeOut(Steps[Steps.length - 1]));
-
-  Steps.push(getAllPeopleToPutIn(Steps[Steps.length - 1]));
-
-  let finalTakeOutVehicles = Steps[Steps.length - 1][1].Vehicles;
-  if (finalTakeOutVehicles.length <= 0) {
-    throw new Error("no vehicles at take out");
-  }
-
-  let firstPutInPeople = Steps[0][0].People.map((p) => p.name);
-  let finalPutInPeople = Steps[Steps.length - 1][0].People.map((p) => p.name);
-  if (!compareStringArrays(firstPutInPeople, finalPutInPeople)) {
-    throw new Error("we lost some people");
-  }
-  return Steps;
-};
-
-export const isScenarioValid = (
-    people: PersonType[],
-    vehicles: VehicleType[],
-    shuttleType: ShuttleType
-  ) => {
-    if (shuttleType === ShuttleType.MEET_AT_PUT_IN) {
-      const minCars: number = 2;
-  
-      if (vehicles.length < minCars) {
-        return false;
-      }
-    
-      //Make sure there is a vehicle with enough space to take two people back to put in
-      let vehiclesWithMoreThanOneSpace = false;
-      for (let i = 0; i < vehicles.length; i++) {
-        if (vehicles[i].maxSpace > 1) {
-          vehiclesWithMoreThanOneSpace = true;
-          break;
-        }
-      }
-      if (!vehiclesWithMoreThanOneSpace) {
-        return false;
-      }
-
-      //Make sure there is enough vehicle space for the people
-      const spaceAvailable = vehicles.reduce((value: number, currentValue: VehicleType) => value + currentValue.maxSpace, 0)
-      const spaceRequired = people.length;
-      if ( spaceRequired > spaceAvailable) {
-        return false;
-      }
-    
-      return true;
-    } else {
-      const minCars: number = 2;
-  
-      if (vehicles.length < minCars) {
-        return false;
-      }
-
-      //Make sure there is a vehicle with enough space to take two people back to put in
-      let vehiclesWithMoreThanOneSpace = false;
-      for (let i = 0; i < vehicles.length; i++) {
-        if (vehicles[i].maxSpace > 1) {
-          vehiclesWithMoreThanOneSpace = true;
-          break;
-        }
-      }
-      if (!vehiclesWithMoreThanOneSpace) {
-        return false;
-      }
-
-      //Make sure there is enough vehicle space for the people
-      const spaceAvailable = vehicles.reduce((value: number, currentValue: VehicleType) => value + currentValue.maxSpace, 0)
-      const spaceRequired = people.length;
-      if ( spaceRequired > spaceAvailable) {
-        return false;
-      }
-
-      return true;
-    }
-  };
-
 const compareStringArrays = (array1: string[], array2: string[]) => {
   if (array1.length !== array2.length) {
     return false;
@@ -677,4 +590,91 @@ export const calculateMeetAtTakeOut = (
     }
 
     return Steps;
-  };
+};
+
+export const calculateMeetAtPutIn = (
+  people: PersonType[],
+  vehicles: VehicleType[]
+): StepType[] => {
+  let Steps: StepType[] = [];
+
+  Steps.push(getAllPeopleMinVehiclesToPutIn(people, vehicles));
+
+  Steps.push(getMaxVehiclesToTakeOut(Steps[Steps.length - 1]));
+
+  Steps.push(getAllPeopleToPutIn(Steps[Steps.length - 1]));
+
+  let finalTakeOutVehicles = Steps[Steps.length - 1][1].Vehicles;
+  if (finalTakeOutVehicles.length <= 0) {
+    throw new Error("no vehicles at take out");
+  }
+
+  let firstPutInPeople = Steps[0][0].People.map((p) => p.name);
+  let finalPutInPeople = Steps[Steps.length - 1][0].People.map((p) => p.name);
+  if (!compareStringArrays(firstPutInPeople, finalPutInPeople)) {
+    throw new Error("we lost some people");
+  }
+  return Steps;
+};
+
+export const isScenarioValid = (
+    people: PersonType[],
+    vehicles: VehicleType[],
+    shuttleType: ShuttleType
+  ) => {
+    if (shuttleType === ShuttleType.MEET_AT_PUT_IN) {
+      const minCars: number = 2;
+  
+      if (vehicles.length < minCars) {
+        return false;
+      }
+    
+      //Make sure there is a vehicle with enough space to take two people back to put in
+      let vehiclesWithMoreThanOneSpace = false;
+      for (let i = 0; i < vehicles.length; i++) {
+        if (vehicles[i].maxSpace > 1) {
+          vehiclesWithMoreThanOneSpace = true;
+          break;
+        }
+      }
+      if (!vehiclesWithMoreThanOneSpace) {
+        return false;
+      }
+
+      //Make sure there is enough vehicle space for the people
+      const spaceAvailable = vehicles.reduce((value: number, currentValue: VehicleType) => value + currentValue.maxSpace, 0)
+      const spaceRequired = people.length;
+      if ( spaceRequired > spaceAvailable) {
+        return false;
+      }
+    
+      return true;
+    } else {
+      const minCars: number = 2;
+  
+      if (vehicles.length < minCars) {
+        return false;
+      }
+
+      //Make sure there is a vehicle with enough space to take two people back to put in
+      let vehiclesWithMoreThanOneSpace = false;
+      for (let i = 0; i < vehicles.length; i++) {
+        if (vehicles[i].maxSpace > 1) {
+          vehiclesWithMoreThanOneSpace = true;
+          break;
+        }
+      }
+      if (!vehiclesWithMoreThanOneSpace) {
+        return false;
+      }
+
+      //Make sure there is enough vehicle space for the people
+      const spaceAvailable = vehicles.reduce((value: number, currentValue: VehicleType) => value + currentValue.maxSpace, 0)
+      const spaceRequired = people.length;
+      if ( spaceRequired > spaceAvailable) {
+        return false;
+      }
+
+      return true;
+    }
+};
