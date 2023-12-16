@@ -18,12 +18,13 @@ const distributePeopleToVehicles = (people: PersonType[], vehicles: VehicleType[
         (person: PersonType) => person.vehicleId === vehicle.personId
       );
       const currentSpace = vehicle.maxSpace - peopleInVehicle.length;
+
       if (currentSpace > 0) {
         person.vehicleId = vehicle.personId;
         indexVehicle = indexVehicle >= vehicles.length - 1 ? 0 : indexVehicle + 1; 
         break;
       };
-      i = 0;
+      continue;
     }
   }
 };
@@ -418,7 +419,8 @@ const getMinVehiclesToPutIn = (previousStep: StepType): StepType => {
     }
     space += vehiclesInput[i].maxSpace;
     takeOutVehicleIds.push(vehiclesInput[i].personId);
-  }
+  };
+  
   takeOutVehicles = vehiclesInput.filter((v)=>takeOutVehicleIds.includes(v.personId));
   putInVehicles = vehiclesInput.filter((v)=>!takeOutVehicleIds.includes(v.personId));
   
@@ -465,17 +467,17 @@ const getMinVehiclesToPutIn = (previousStep: StepType): StepType => {
 
 
   return [
-  {
-    Location: Location.PUT_IN,
-    People: putInPeople,
-    Vehicles: putInVehicles,
-  },
-  {
-    Location: Location.TAKE_OUT,
-    People: takeOutPeople,
-    Vehicles: takeOutVehicles,
-  },
-]; 
+    {
+      Location: Location.PUT_IN,
+      People: putInPeople,
+      Vehicles: putInVehicles,
+    },
+    {
+      Location: Location.TAKE_OUT,
+      People: takeOutPeople,
+      Vehicles: takeOutVehicles,
+    },
+  ]; 
 };
 
 const getSmallestVehicleFromPutInToTakeOut = (previousStep: StepType): StepType => {
