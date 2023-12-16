@@ -142,11 +142,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   buttonShuttleContainer: {
-    position: 'absolute',
-    left: 40,
-    right: 40,
-    bottom: 0,
-    backgroundColor: undefined
+    marginHorizontal: 40,
   },
   buttonShuttle: {
     borderRadius: 20,
