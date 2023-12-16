@@ -6,6 +6,7 @@ import Shuttle from './Shuttle';
 import { PersonType, VehicleType, ShuttleType } from "../logic/Types";
 import { List } from '../components/List';
 import { isScenarioValid } from '../logic/logic';
+import { colors } from '../assets/colors';
 
 export default function Main() {
   const [addPersonVisible, setAddPersonVisible] = useState(false);
@@ -36,9 +37,9 @@ export default function Main() {
           {shuttleType === ShuttleType.MEET_AT_PUT_IN ? 'Meet at Put In': 'Meet at Take Out'}
         </Text>
         <Switch
-            trackColor={{false: '#1B9321', true: '#FF6E25'}}
-            thumbColor={'#FFFFFF'}
-            ios_backgroundColor="#1B9321"
+            trackColor={{false: colors.putIn, true: colors.takeOut}}
+            thumbColor={colors.light}
+            ios_backgroundColor={colors.putIn}
             onValueChange={toggleSwitch}
             value={shuttleType === ShuttleType.MEET_AT_TAKE_OUT}
           />
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'flex-start',
+    backgroundColor: colors.light,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -116,18 +118,18 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   inputTitle: {
-    color: 'black',
+    color: colors.dark,
     fontWeight: '400',
     textAlign: 'center',
     fontSize: 18,
   },
   inputAddPersonText: {
-    color: '#1B9321',
+    color: colors.positive,
     textAlign: 'center',
     fontSize: 14,
   },
   inputAddPersonButton: {
-    color: '#1B9321',
+    color: colors.positive,
     fontSize: 28,
   },
   row: {
@@ -150,28 +152,26 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    color: 'grey',
-    backgroundColor: '#FF6E25',
+    backgroundColor: colors.positive,
     margin: 10,
   },
   buttonShuttleDisabled: {
-    borderColor: 'grey',
+    borderColor: colors.disabled,
     borderWidth: 2,
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    color: 'grey',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: colors.light,
     margin: 10,
   },
   buttonShuttleText: {
-    color: 'white',
+    color: colors.light,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
   },
   buttonShuttleTextDisabled: {
-    color: 'grey',
+    color: colors.disabled,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   noPeopleText: {
     fontWeight: "600",
-    color: 'grey',
+    color: colors.dark,
     marginBottom: 30,
   },
 });

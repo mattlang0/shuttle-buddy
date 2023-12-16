@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Platform, Pressable, StyleSheet, TextInput, KeyboardAvoidingView, Modal, Text, View } from 'react-native';
 import { PersonType, VehicleType, EntityType, ScenarioType, ShuttleType } from '../logic/Types';
 import QRCodeScanner from './QRCodeScanner';
+import { colors } from '../assets/colors';
 
 type AddEditEntityProps = {
   onClose:()=>void,
@@ -259,8 +260,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingBottom: 10,
-    backgroundColor: '#F5F5F5',
-    borderColor: 'grey',
+    backgroundColor: colors.light,
+    borderColor: colors.dark,
     borderWidth: 1,
     gap: 15,
   },
@@ -285,14 +286,14 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   inputName: {
-    borderColor: 'grey',
+    borderColor: colors.dark,
     borderWidth: 1,
     borderRadius: 20,
     flex: 1,
     padding: 10,
   },
   inputTitle: {
-    color: 'black',
+    color: colors.dark,
     fontWeight: '400',
     textAlign: 'center',
     fontSize: 18,
@@ -304,7 +305,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   inputSpaceValue: {
-    color: 'black',
+    color: colors.dark,
     fontWeight: '400',
     textAlign: 'center',
     fontSize: 16,
@@ -316,21 +317,21 @@ const styles = StyleSheet.create({
   buttonSave: {
     borderRadius: 20,
     padding: 10,
-    backgroundColor: '#1B9321',
+    backgroundColor: colors.positive,
   },
   buttonSaveDisabled: {
     borderRadius: 20,
     padding: 10,
-    backgroundColor: 'grey',
+    backgroundColor: colors.disabled,
   },
   buttonSaveText: {
-    color: 'white',
+    color: colors.light,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
   },
   buttonSaveTextDisabled: {
-    color: 'white',
+    color: colors.light,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
@@ -338,35 +339,34 @@ const styles = StyleSheet.create({
   buttonDelete: {
     borderRadius: 20,
     padding: 10,
-    backgroundColor: '#BE1E1E',
+    backgroundColor: colors.negative,
   },
   buttonDeleteDisabled: {
-    borderColor: 'grey',
-    borderWidth: 0,
+    borderColor: colors.disabled,
+    borderWidth: 2,
     borderRadius: 20,
     padding: 10,
-    color: 'grey',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: colors.light,
   },
   buttonDeleteText: {
-    color: 'white',
+    color: colors.light,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
   },
   buttonDeleteTextDisabled: {
-    color: 'grey',
+    color: colors.disabled,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
   },
   iconPlusMinus: {
     fontSize: 28,
-    color: '#1B9321',
+    color: colors.positive,
   },
   pressableIconDisabled: {
     fontSize: 28,
-    color: 'grey',
+    color: colors.disabled,
   },
   icon: {
     fontSize: 30,
@@ -374,11 +374,11 @@ const styles = StyleSheet.create({
   pressableIcon: {
     fontSize: 28,
     marginHorizontal: 15,
-    color: '#2E2E2E',
+    color: colors.dark,
   },
   hiddenButton: {
     fontSize: 28,
     marginHorizontal: 15,
-    color: 'white',
+    color: colors.light,
   },
 });

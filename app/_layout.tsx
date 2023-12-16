@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { Image, StyleSheet, SafeAreaView, StatusBar, Platform} from 'react-native';
+import { colors } from '../assets/colors';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -52,7 +53,7 @@ function RootLayoutNav() {
           name="index"
           
           options={{ 
-            headerStyle: { backgroundColor: '#FF6E25'},
+            headerStyle: { backgroundColor: colors.light},
             header: () => (
               <SafeAreaView style={styles.SafeAreaView}>
                 <Image
@@ -71,7 +72,7 @@ function RootLayoutNav() {
 
 const styles = StyleSheet.create({
   SafeAreaView: {
-    backgroundColor: '#FF6E25',
+    backgroundColor: colors.light,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,

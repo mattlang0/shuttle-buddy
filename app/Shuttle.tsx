@@ -6,6 +6,7 @@ import { calculateMeetAtPutIn, calculateMeetAtTakeOut } from '../logic/logic';
 import SwipableTabs from './SwipableTabs';
 import { NavDots } from '../components/NavDots';
 import QRCodeModal from './QRCodeModal';
+import { colors } from '../assets/colors';
 
 type ShuttleProps = {
   people: PersonType[],
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   pressableIcon: {
     fontSize: 28,
     marginHorizontal: 15,
-    color: '#2E2E2E',
+    color: colors.dark,
   },
   image: {
     flex: 1,

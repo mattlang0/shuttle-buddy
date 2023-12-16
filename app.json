@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FF6E25"
+      "backgroundColor": "#303036"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -22,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/squareIconTransparent.png",
-        "backgroundColor": "#FF6E25"
+        "backgroundColor": "#303036"
       },
       "package": "com.mlang1.shuttlebuddy"
     },

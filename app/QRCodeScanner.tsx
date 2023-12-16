@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesome } from "@expo/vector-icons";
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { ScenarioType } from '../logic/Types'
+import { ScenarioType } from '../logic/Types';
+import { colors } from '../assets/colors';
 
 type QRCodeScannerProps = {
     onClose:(data? : ScenarioType)=>void,
@@ -77,14 +78,14 @@ export default function QRCodeScanner(props: QRCodeScannerProps) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: colors.light,
         alignItems: 'stretch',
         justifyContent: 'center',
     },
     pressableIcon: {
       fontSize: 28,
       margin: 15,
-      color: '#2E2E2E',
+      color: colors.dark,
     },
     text: {
         textAlign: 'center',

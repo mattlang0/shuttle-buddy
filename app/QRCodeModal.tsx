@@ -3,6 +3,7 @@ import QRCode from 'react-native-qrcode-svg';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { StyleSheet, Pressable, Text, View } from 'react-native';
 import { PersonType, ShuttleType, VehicleType } from '../logic/Types';
+import { colors } from '../assets/colors';
 
 type QRCodeModalProps = {
   people: PersonType[],
@@ -57,8 +58,8 @@ const styles = StyleSheet.create({
       margin: 20,
       padding: 20,
       borderRadius: 20,
-      backgroundColor: 'white',
-      borderColor: 'grey',
+      backgroundColor: colors.light,
+      borderColor: colors.dark,
       borderWidth: 1,
       gap: 15,
       alignItems: 'center',
@@ -70,11 +71,11 @@ const styles = StyleSheet.create({
     },
     pressableIcon: {
       fontSize: 28,
-      color: '#2E2E2E',
+      color: colors.dark,
     },
     hiddenButton: {
       fontSize: 28,
-      color: 'white',
+      color: colors.light,
     },
     textTitle: {
       textAlign: 'center',
