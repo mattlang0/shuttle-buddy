@@ -24,6 +24,23 @@ const distributePeopleToVehicles = (people: PersonType[], vehicles: VehicleType[
         indexVehicle = indexVehicle >= vehicles.length - 1 ? 0 : indexVehicle + 1; 
         break;
       };
+
+      //if we're at the end of vehicles
+      //and there is an earlier vehicle with space
+      //restart at the beginning
+      if (i === vehicles.length - 1) {
+        const vehicleWithSpace = vehicles.find((v: VehicleType)=>{
+          const peopleInVehicle = allPeople.filter(
+            (p: PersonType) => p.vehicleId === v.personId
+          );
+          const currentSpace = v.maxSpace - peopleInVehicle.length;
+          return currentSpace > 0;
+        });
+        if (vehicleWithSpace !== undefined) {
+          i = -1;
+        }
+      };
+
       continue;
     }
   }
