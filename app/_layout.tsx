@@ -3,7 +3,7 @@ import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { Image, StyleSheet, SafeAreaView, StatusBar, Platform} from 'react-native';
+import { Image, StyleSheet, SafeAreaView, StatusBar, Platform, useColorScheme} from 'react-native';
 import { colors } from '../assets/colors';
 
 export {
@@ -45,17 +45,16 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-
+  let colorScheme = useColorScheme();
   return (
     <ThemeProvider value={DefaultTheme}>
       <Stack>
         <Stack.Screen
           name="index"
           
-          options={{ 
-            headerStyle: { backgroundColor: colors.light},
+          options={{
             header: () => (
-              <SafeAreaView style={styles.SafeAreaView}>
+              <SafeAreaView style={[styles.SafeAreaView, {backgroundColor: colorScheme === 'dark' ? colors.dark : colors.light}]}>
                 <Image
                     style={styles.logo}
                     source={require('../assets/images/header.png')}
@@ -72,7 +71,6 @@ function RootLayoutNav() {
 
 const styles = StyleSheet.create({
   SafeAreaView: {
-    backgroundColor: colors.light,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
