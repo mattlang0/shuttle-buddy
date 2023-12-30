@@ -65,12 +65,25 @@ export default function QRCodeScanner(props: QRCodeScannerProps) {
 
     return (
         <View style={styles.container}>
-            <Pressable
-                onPress={()=>{onClose()}}>
-                <FontAwesome style={styles.pressableIcon} name='angle-left' />
-            </Pressable>
+
+            <View style={styles.topBar}>
+                <Pressable
+                    onPress={()=>{onClose()}}>
+                    <FontAwesome style={styles.pressableIcon} name='angle-left' />
+                </Pressable>
+
+                <Text style={styles.textTitle}>Scan a shuttle</Text>
+
+                <FontAwesome style={styles.hiddenButton} name='angle-right' />
+                
+            </View>
+
+            <Text style={styles.textDescription}>Scan a friends Shuttle Buddy QR Code</Text>
+            
+            <Text style={styles.textItalics}>This will overwrite your current shuttle</Text>
 
             {getScannerComponent()}
+            
         </View>
     );
 };
@@ -82,10 +95,33 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         justifyContent: 'center',
     },
+    topBar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
     pressableIcon: {
-      fontSize: 28,
-      margin: 15,
-      color: colors.dark,
+        fontSize: 28,
+        margin: 15,
+        color: colors.dark,
+    },
+    hiddenButton: {
+        fontSize: 28,
+        margin: 15,
+        color: colors.light,
+    },
+    textTitle: {
+        textAlign: 'center',
+        fontSize: 20,
+    },
+    textDescription: {
+        textAlign: 'center',
+    },
+    textItalics: {
+        textAlign: 'center',
+        fontStyle: 'italic',
+        fontSize: 12
     },
     text: {
         textAlign: 'center',
