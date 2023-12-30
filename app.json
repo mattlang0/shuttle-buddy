@@ -25,7 +25,8 @@
         "foregroundImage": "./assets/images/vehicleTransparent500.png",
         "backgroundColor": "#303036"
       },
-      "package": "com.mlang1.shuttlebuddy"
+      "package": "com.mlang1.shuttlebuddy",
+      "versionCode": "2"
     },
     "web": {
       "bundler": "metro",
