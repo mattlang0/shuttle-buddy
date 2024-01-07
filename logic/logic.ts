@@ -108,7 +108,7 @@ const getAllPeopleMinVehiclesToPutIn = (
     }
   }
 
-  //** TODO Evenly distribute people across vehicles **
+  distributePeopleToVehicles(putInPeople, putInVehicles, people);
 
   //Sometimes putInPeople were added twice during rapid testing of the same scenario
   //This function makes the array unique
