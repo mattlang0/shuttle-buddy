@@ -12,10 +12,11 @@ test("all scenarios up to x", async () => {
   //2 people with 4 space
   //0 pepole with 5 space
 
+  const min = 0
   const max = 999999;
   const shuttleType = ShuttleType.MEET_AT_TAKE_OUT;
 
-  for (let number = 0; number < max; number++) {
+  for (let number = min; number < max; number++) {
     let numArray = zeroPad(number).split("").map(Number);
     numArray.reverse();
     const scenario = getTestScenario(shuttleType, numArray);
