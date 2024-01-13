@@ -299,17 +299,64 @@ const getAllPeopleAllVehiclesToTakeOut = (
     let takeOutVehicles: VehicleType[] = JSON.parse(JSON.stringify(vehicles));
 
     //TAKE OUT VEHICLES
-    //TODO do we need all vehicles?
     //** Sort vehicles by max space **
     takeOutVehicles.sort((a, b) => b.maxSpace - a.maxSpace);
 
+    // If we can do it in one shot with less vehicles, use less vehicles
+    // We can do it one shot if:
+    // There are enough vehicles going to the put in to fit the number of people going to put in
+    // AND There are enough vehicles at the take out to fit the number of cars going to put in
+    // AND those vehicles are different
+    let vehiclesGoingToPutIn = 0;
+    let putInPeopleSpaceAvailable = 0;
+    let putInVehicleIndex = 0;
+    for (let i = 0; i < takeOutVehicles.length; i++) {
+      if (putInPeopleSpaceAvailable < people.length) {
+        putInPeopleSpaceAvailable += takeOutVehicles[i].maxSpace;
+        vehiclesGoingToPutIn++;
+      } else {
+        putInVehicleIndex = i - 1;
+        break;
+      }
+    };
+    let vehiclesStayingAtTakeOut = 0;
+    let takeOutPeopleSpaceAvailable = 0;
+    let takeOutVehicleIndex = vehiclesGoingToPutIn;
+    for (let i = putInVehicleIndex + 1; i < takeOutVehicles.length; i++) {
+      if (takeOutPeopleSpaceAvailable < vehiclesGoingToPutIn) {
+        takeOutPeopleSpaceAvailable += takeOutVehicles[i].maxSpace - 1;
+        vehiclesStayingAtTakeOut++;
+      } else {
+        takeOutVehicleIndex = i;
+        break;
+      }
+    };
+    //If we can get rid of some vehicles, let's do it
+    if ((vehiclesGoingToPutIn + vehiclesStayingAtTakeOut) < takeOutVehicles.length) {
+      let peopleIdsToMove: string[] = [];
+      for (let i = takeOutVehicleIndex; i < takeOutVehicles.length; i++) {
+        const personId = takeOutVehicles[i].personId;
+        peopleIdsToMove.push(personId);
+      };
+      //remove people from vehicles
+      peopleIdsToMove.forEach((personId:string)=>{
+        let person = takeOutPeople.find((person:PersonType)=>{
+          return person.id === personId;
+        })
+        person && delete person.vehicleId;
+      });
+      //Remove vehicles from take out
+      takeOutVehicles = takeOutVehicles.filter((vehicle: VehicleType)=>{
+        return !peopleIdsToMove.includes(vehicle.personId);
+      });
+    }
+
     //TAKE OUT PEOPLE
-    //Distribute people across vehicles
     //List people without cars
     const peopleWithoutCars = takeOutPeople.filter(
       (person: PersonType) => person.vehicleId === undefined
     );
-
+    //Distribute people across vehicles
     distributePeopleToVehicles(peopleWithoutCars, takeOutVehicles, takeOutPeople);
     
     return [
