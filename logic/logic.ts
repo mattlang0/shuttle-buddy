@@ -290,7 +290,7 @@ const compareStringArrays = (array1: string[], array2: string[]) => {
   return true;
 };
 
-const getAllPeopleAllVehiclesToTakeOut = (
+const getAllPeopleMinVehiclesToTakeOut = (
   people: PersonType[],
   vehicles: VehicleType[]): StepType => {
     let putInPeople: PersonType[] = [];
@@ -606,7 +606,7 @@ export const calculateMeetAtTakeOut = (
   vehicles: VehicleType[]): StepType[] => {
     let Steps: StepType[] = [];
 
-    Steps.push(getAllPeopleAllVehiclesToTakeOut(people, vehicles));
+    Steps.push(getAllPeopleMinVehiclesToTakeOut(people, vehicles));
 
     Steps.push(getMinVehiclesToPutIn(Steps[Steps.length - 1]));
 
