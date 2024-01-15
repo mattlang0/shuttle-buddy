@@ -9,4 +9,13 @@ Shuttle Buddy will organize how your group will get from the put in to the take 
 
 
 ## Deploy
-*To be written*
+Update `version` in:
+ - package.json
+ - app.json
+
+Update `versionCode` in:
+ - app.json
+
+Run:
+
+`eas build`

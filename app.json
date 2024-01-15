@@ -2,7 +2,7 @@
   "expo": {
     "name": "shuttle-buddy",
     "slug": "shuttle-buddy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/vehicleTransparent500.png",
     "backgroundColor": "#303036",
@@ -26,7 +26,7 @@
         "backgroundColor": "#303036"
       },
       "package": "com.mlang1.shuttlebuddy",
-      "versionCode": 3
+      "versionCode": 4
     },
     "web": {
       "bundler": "metro",
