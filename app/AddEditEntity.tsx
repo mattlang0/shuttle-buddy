@@ -25,14 +25,8 @@ export default function AddEditEntity(props: AddEditEntityProps) {
 
   const onSaveClick = () => {
     if (entity) {
-      setPeople((prevPeople) => {
-        let people: PersonType[] = prevPeople;
-        const idx = people.findIndex((p => p.id === entity.person.id));
-        people[idx].name = name;
-
-        return [...people]
-      });
-
+      let deleteVehicle = false;
+      let createVehicle = false;
       setVehicles((prevVehicles) => {
         let vehicles: VehicleType[] = prevVehicles;
         const idx = vehicles.findIndex((v => v.personId === entity.person.id));
@@ -40,6 +34,7 @@ export default function AddEditEntity(props: AddEditEntityProps) {
 
         if (vehicleExists) {
           if (space === 0) {
+            deleteVehicle = true;
             vehicles.splice(idx, 1);
           }
           else {
@@ -47,6 +42,7 @@ export default function AddEditEntity(props: AddEditEntityProps) {
           }
         } else {
           if (space > 0) {
+            createVehicle = true;
             const vehicle: VehicleType = {
               personId: entity.person.id,
               maxSpace: space + 1,
@@ -55,6 +51,18 @@ export default function AddEditEntity(props: AddEditEntityProps) {
           }
         }
         return [...vehicles]
+      });
+      setPeople((prevPeople) => {
+        let people: PersonType[] = prevPeople;
+        const idx = people.findIndex((p => p.id === entity.person.id));
+        people[idx].name = name;
+        if (createVehicle) {
+          people[idx].vehicleId = people[idx].id;
+        }
+        if (deleteVehicle) {
+          delete people[idx].vehicleId;
+        }
+        return [...people]
       });
     } else {
       const personId = Math.random().toString(16).slice(2);
