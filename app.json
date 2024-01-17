@@ -27,7 +27,7 @@
       },
       "package": "com.mlang1.shuttlebuddy",
       "versionCode": 6,
-      "permissions": ["com.google.android.play.billingclient.version"]
+      "permissions": ["com.google.android.play.billingclient"]
     },
     "web": {
       "bundler": "metro",

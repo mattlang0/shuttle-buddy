@@ -1,4 +1,0 @@
-<manifest
-    package="com.mlang1.shuttlebuddy">
-    <uses-permission android:name="com.android.vending.BILLING" />
-</manifest>
