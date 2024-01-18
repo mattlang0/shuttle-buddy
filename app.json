@@ -26,8 +26,7 @@
         "backgroundColor": "#303036"
       },
       "package": "com.mlang1.shuttlebuddy",
-      "versionCode": 8,
-      "permissions": ["com.android.billingclient:billing:6.0.1"]
+      "versionCode": 8
     },
     "web": {
       "bundler": "metro",
