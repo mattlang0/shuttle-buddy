@@ -3,9 +3,15 @@ import { PersonType, VehicleType, ShuttleType, StepType, Location } from "./Type
 const distributePeopleToVehicles = (people: PersonType[], vehicles: VehicleType[], allPeople: PersonType[]) => {
   //This variable allows the distribution of people across all vehicles so that no one is lonely
   let indexVehicle = 0;
-  //Loop through each person without a car and assign them to a car with space
-  for (var idxPerson = 0; idxPerson < people.length; idxPerson++) {
-    var person = people[idxPerson];
+
+  //List of people who don't own a vehicle
+  const peopleThatDontOwnAVehicle = people.filter(
+    (person: PersonType) => !vehicles.some((vehicle: VehicleType) => vehicle.personId === person.id)
+  );
+
+  //Loop through each person above and distribute them across vehicles
+  for (var idxPerson = 0; idxPerson < peopleThatDontOwnAVehicle.length; idxPerson++) {
+    var person = peopleThatDontOwnAVehicle[idxPerson];
 
     //Find first vehicle with space
     for (
