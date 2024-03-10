@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Text, Pressable, StyleSheet, ImageBackground, Modal, View } from 'react-native';
+import { Text, Pressable, StyleSheet, ImageBackground, Modal, View, SafeAreaView } from 'react-native';
 import { PersonType, VehicleType, ShuttleType, StepType } from '../logic/Types';
 import { calculateMeetAtPutIn, calculateMeetAtTakeOut } from '../logic/logic';
 import SwipableTabs from './SwipableTabs';
@@ -29,47 +29,47 @@ export default function Shuttle(props: ShuttleProps) {
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../assets/images/1.png')} resizeMode='cover' style={styles.image}>
+        <SafeAreaView style={styles.container}>
+          {/* Top Buttons Container */}
+          <View style={styles.topButtonsContainer}>
 
-        {/* Top Buttons Container */}
-        <View style={styles.topButtonsContainer}>
+            {/* Back button */}
+            <Pressable
+              onPress={onClose}>
+              <FontAwesome style={styles.pressableIcon} name='angle-left' />
+            </Pressable>
 
-          {/* Back button */}
-          <Pressable
-            onPress={onClose}>
-            <FontAwesome style={styles.pressableIcon} name='angle-left' />
-          </Pressable>
+            {/* Shuttle Buddy Step # Title */}
+            <View style={styles.titleContainer}>
+                <Text style={styles.titleShuttleBuddy}>Shuttle Buddy |</Text>
+                <Text style={styles.titleStepNumber}>Step {activeStep + 1}</Text>
+            </View>
 
-          {/* Shuttle Buddy Step # Title */}
-          <View style={styles.titleContainer}>
-              <Text style={styles.titleShuttleBuddy}>Shuttle Buddy |</Text>
-              <Text style={styles.titleStepNumber}>Step {activeStep + 1}</Text>
+            {/* Share button */}
+            <Pressable
+              onPress={onShare}>
+              <FontAwesome style={styles.pressableIcon} name='qrcode' />
+            </Pressable>
+
           </View>
 
-          {/* Share button */}
-          <Pressable
-            onPress={onShare}>
-            <FontAwesome style={styles.pressableIcon} name='qrcode' />
-          </Pressable>
+          {/* Step */}
+          <SwipableTabs steps={steps} index={activeStep} setIndex={setActiveStep}/>
 
-        </View>
+          {/* Bottom Nav Dots */}
+          <NavDots index={activeStep} count={steps.length} />
 
-        {/* Step */}
-        <SwipableTabs steps={steps} index={activeStep} setIndex={setActiveStep}/>
-
-        {/* Bottom Nav Dots */}
-        <NavDots index={activeStep} count={steps.length} />
-
-        {/* QR Code Modal */}
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={qrCodeVisible}
-            onRequestClose={() => {
-              setQRCodeVisible(!setQRCodeVisible);
-            }}>
-            <QRCodeModal onClose={() => {setQRCodeVisible(false)}} people={people} vehicles={vehicles} shuttleType={shuttleType}/>
-        </Modal>
-
+          {/* QR Code Modal */}
+          <Modal
+              animationType="slide"
+              transparent={true}
+              visible={qrCodeVisible}
+              onRequestClose={() => {
+                setQRCodeVisible(!setQRCodeVisible);
+              }}>
+              <QRCodeModal onClose={() => {setQRCodeVisible(false)}} people={people} vehicles={vehicles} shuttleType={shuttleType}/>
+          </Modal>
+        </SafeAreaView>
       </ImageBackground>
 
     </View>
