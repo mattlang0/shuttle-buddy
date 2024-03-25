@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesome } from "@expo/vector-icons";
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { ScenarioType } from '../logic/Types';
 import { colors } from '../assets/colors';
@@ -21,8 +21,16 @@ export default function QRCodeScanner(props: QRCodeScannerProps) {
 
     useEffect(() => {
         const getBarCodeScannerPermissions = async () => {
-          const { status } = await BarCodeScanner.requestPermissionsAsync();
-          setHasPermission(status === 'granted');
+            const { granted } = await BarCodeScanner.getPermissionsAsync();
+            if (!granted) {
+                Alert.alert('Camera access required', 'Shuttle Buddy uses your camera to scan qr codes. Please allow camera access in settings.', [{text: 'OK', onPress: async () => {
+                    const { granted } = await BarCodeScanner.requestPermissionsAsync();
+                    setHasPermission(granted);
+                }}]);
+            } else {
+                const { granted } = await BarCodeScanner.requestPermissionsAsync();
+                setHasPermission(granted);
+            }
         };
     
         getBarCodeScannerPermissions();
