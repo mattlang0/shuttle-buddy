@@ -21,16 +21,8 @@ export default function QRCodeScanner(props: QRCodeScannerProps) {
 
     useEffect(() => {
         const getBarCodeScannerPermissions = async () => {
-            const { granted } = await BarCodeScanner.getPermissionsAsync();
-            if (!granted) {
-                Alert.alert('Camera access required', 'Shuttle Buddy uses your camera to scan qr codes. Please allow camera access in settings.', [{text: 'OK', onPress: async () => {
-                    const { granted } = await BarCodeScanner.requestPermissionsAsync();
-                    setHasPermission(granted);
-                }}]);
-            } else {
-                const { granted } = await BarCodeScanner.requestPermissionsAsync();
-                setHasPermission(granted);
-            }
+            const { granted } = await BarCodeScanner.requestPermissionsAsync();
+            setHasPermission(granted);
         };
     
         getBarCodeScannerPermissions();

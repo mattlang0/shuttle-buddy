@@ -2,7 +2,7 @@
   "expo": {
     "name": "shuttle-buddy",
     "slug": "shuttle-buddy",
-    "version": "1.6.4",
+    "version": "1.6.5",
     "orientation": "portrait",
     "icon": "./assets/images/vehicleTransparent500.png",
     "backgroundColor": "#303036",
@@ -18,7 +18,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mlang1.shuttlebuddy"
+      "bundleIdentifier": "com.mlang1.shuttlebuddy",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Shuttle Buddy needs access to use your camera to scan shuttle barcodes"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -26,7 +29,7 @@
         "backgroundColor": "#303036"
       },
       "package": "com.mlang1.shuttlebuddy",
-      "versionCode": 13
+      "versionCode": 14
     },
     "web": {
       "bundler": "metro",
